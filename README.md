@@ -1,7 +1,7 @@
 # OOP-Project
 Academic Office Replacement
 
-##Features for students
+## Features for students
 
 1. view timetable
 2. view courses
@@ -12,7 +12,7 @@ Academic Office Replacement
 7. see exams schedule + room allocations
 8. a dashboard (main menu)
 
-##Features for teachers
+## Features for teachers
 
 1.a dashboard (main menu)
 2. mark each student
