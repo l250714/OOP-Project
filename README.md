@@ -14,7 +14,7 @@ Academic Office Replacement
 
 ## Features for teachers
 
-1.a dashboard (main menu)
+1. a dashboard (main menu)
 2. mark each student
 3. view each of their classes/ sections
 4. view feedback results
