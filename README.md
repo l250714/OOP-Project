@@ -26,20 +26,22 @@ Academic Office Replacement
 2. Name
 3. Type
 4. GPA
-5. Semester no./ batch
-6. number of courses
-7. Course infromation
-8. exam and class schedules
-9. grades and marks for each course's assessments
+5. email
+6. Semester no./ batch
+7. number of courses
+8. Course infromation
+9. exam and class schedules
+10. grades and marks for each course's assessments
     
 ## Data Required (for Teachers)
 1. ID
 2. Name
-3. Average Feedback
-4. Assigned Courses
-5. Assigned Sections
-6. Marks of students
-7. Designation
+3. email
+4. Average Feedback
+5. Assigned Courses
+6. Assigned Sections
+7. Marks of students
+8. Designation
    
 ## Data Required (for Courses)
 1. ID
