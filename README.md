@@ -21,3 +21,36 @@ Academic Office Replacement
 5. view class average
 6. venus and schedules
 
+## Data Required (for students)
+1. ID
+2. Name
+3. Type
+4. GPA
+5. Semester no./ batch
+6. number of courses
+7. Course infromation
+8. exam and class schedules
+9. grades and marks for each course's assessments
+    
+## Data Required (for Teachers)
+1. ID
+2. Name
+3. Average Feedback
+4. Assigned Courses
+5. Assigned Sections
+6. Marks of students
+7. Designation
+   
+## Data Required (for Courses)
+1. ID
+2. Name
+3. Quizzes + Exams + Assignments + their weightages + min/max/average
+4. Teacher ID/ Name
+5. Course Type
+6. exam duration
+7. average grade/ marks
+   
+## Data Required (for Management)
+1. Exam schedule
+2. Venu Info= RoomID+ Capacity+ Has Computers
+3. Sections Info: SectionID | CourseID | TeacherID | VenueID | TimeSlot
