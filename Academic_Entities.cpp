@@ -1,8 +1,11 @@
 #include <iostream>
+#include "Courses.cpp"
+#include "Assessments.cpp"
 using namespace std;
 
 class AcademicEntity{
     string name,email,ID;
+    Course *courses;
 public:
     virtual void displayProfile()=0;
 };
