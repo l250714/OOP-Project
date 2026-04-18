@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string.h>
+#include <vector>
 #include "Assessments.cpp"
+#include "Academic_Entities.cpp"
 using namespace std;
 //think about schedule and timings and venue
 class Course{   //base class
@@ -99,12 +101,40 @@ class Core: public Course{
     Quiz* quizzes;
     Exam* exams;
     Assignment* assignments;
+    vector <Student*> students;
+    float points;
+    char char*grade;
 public:
     Core(){
         quizzes=nullptr;
         exams=nullptr;
         assignments=nullptr;
         credithr=3;
+    }
+    void setpoints(float points){
+        this->points=points;
+    }
+    void setgrade(char* grade){
+        if(strlen(grade)>2){
+            cout<<"\nGrade is too long in length.";
+            return;
+        }
+        else{
+            for(int i=0;i<strlen(grade)+1;i++){
+                this->grade[i]=grade[i];
+            }
+            this->grade[strlen(grade)]='\0';
+        }
+    }
+    float getpoints(){
+        return points;
+    }
+    string getgrade(){
+        string temp="";
+        for(int i=0;grade[i]!='\0';i++){
+            temp+=grade[i];
+        }
+        return grade;
     }
 
 };
@@ -113,6 +143,8 @@ class Elective: public Course{
     Assignment* assignments;
     Project final_project;
     Quiz* quizzes;
+    float points;
+    char char*grade;
 public:
     Elective(){
         quizzes=nullptr;
@@ -120,16 +152,68 @@ public:
        // final_project=0;
        credithr=2;
     }
+    void setpoints(float points){
+        this->points=points;
+    }
+    void setgrade(char* grade){
+        if(strlen(grade)>2){
+            cout<<"\nGrade is too long in length.";
+            return;
+        }
+        else{
+            for(int i=0;i<strlen(grade)+1;i++){
+                this->grade[i]=grade[i];
+            }
+            this->grade[strlen(grade)]='\0';
+        }
+    }
+    float getpoints(){
+        return points;
+    }
+    string getgrade(){
+        string temp="";
+        for(int i=0;grade[i]!='\0';i++){
+            temp+=grade[i];
+        }
+        return grade;
+    }
 };
 
 class Lab: public Course{
     Quiz* quizzes;
     Assignment* Lab_tasks;
+    float points;
+    char char*grade;
 public:
     Lab(){
         quizzes=nullptr;
         Lab_tasks=nullptr;
         credithr=1;
+    }
+    void setpoints(float points){
+        this->points=points;
+    }
+    void setgrade(char* grade){
+        if(strlen(grade)>2){
+            cout<<"\nGrade is too long in length.";
+            return;
+        }
+        else{
+            for(int i=0;i<strlen(grade)+1;i++){
+                this->grade[i]=grade[i];
+            }
+            this->grade[strlen(grade)]='\0';
+        }
+    }
+    float getpoints(){
+        return points;
+    }
+    string getgrade(){
+        string temp="";
+        for(int i=0;grade[i]!='\0';i++){
+            temp+=grade[i];
+        }
+        return grade;
     }
 };
 
