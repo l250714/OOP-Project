@@ -5,11 +5,11 @@
 using namespace std;
 
 class Venue{
-    char* ID;
+    string ID;
     int capacity;
     bool has_computers;
 public:
-    void setID(char* ID);
+    void setID(string);
     void setCapacity(int cap);
     void setComputer(bool comp);
     string getID();
