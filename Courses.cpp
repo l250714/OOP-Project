@@ -90,6 +90,37 @@ void Course::setExamduration(float time){
         exam_duration=time;
     }
 }
+void Course::setStudent(Student& obj){
+    Student *s;
+    if(obj.getType()=="Regular"){
+        s=new Regular_Student;
+        s->setEmail(obj.getEmail());
+        s->setID(obj.getID());
+        s->setName(obj.getName());
+        s->setNumCore(obj.getNumCore());
+        s->setNumElective(obj.getNumElective());
+        s->setNumLab(obj.getNumLab());
+        s->setSemester(obj.getSemester());
+    }
+    else if(obj.getType()=="Exchange"){
+        s=new Exchange_Student(obj.getID(),obj.getName(),obj.getEmail(),obj.getSemester());
+        s->setNumCore(obj.getNumCore());
+        s->setNumElective(obj.getNumElective());
+        s->setNumLab(obj.getNumLab());
+        s->setSemester(obj.getSemester());
+    }
+    else if(obj.getType()=="Scholarship"){
+        s= new Scholarship_Student(obj.getID(),obj.getName(),obj.getEmail(),obj.getSemester(),obj.GPAcalculation());
+        s->setNumCore(obj.getNumCore());
+        s->setNumElective(obj.getNumElective());
+        s->setNumLab(obj.getNumLab());
+        s->setSemester(obj.getSemester());
+    }
+}
+Student& Course::getStudent(int i){
+    return *students[i];
+}
+
 string Course::getID(){
     string temp="";
     for(int i=0;ID[i]!='\0';i++){
