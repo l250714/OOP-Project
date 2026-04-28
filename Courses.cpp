@@ -6,8 +6,9 @@ using namespace std;
 //think about schedule and timings and venue
 
 Course::Course(){
-    ID=nullptr;
-    name=nullptr;
+    ID="none";
+    name="none";
+    teacherID="none";
     TQuizzes=0;
     TExams=0;
     TAssignments=0;
@@ -35,7 +36,30 @@ void Course::set_ID(const char* id){
     }
     ID[idlen]='\0';
 }
-void Course::setname(const char* name){
+void Course::set_teacherID(string id){
+    //course ID must be alphanumeric and not longer than 7
+    int idlen=id.length();
+    if(idlen>4){
+        cout<<"\nError: Course Code is Invalid. Please Try Again.";
+        return;
+    }
+    for(int i=0;id[i]!='\0';i++){
+        if(iswalnum(id[i])){
+            continue;
+        }
+        else{
+            cout<<"\nError: Teacher ID must only contain alphanumeric characters.";
+            return;
+        }
+    }
+    teacherID=new char[idlen+1];
+    for(int i=0;id[i]!='\0';i++){
+        teacherID[i]=id[i];
+    }
+    teacherID[idlen]='\0';
+}
+
+void Course::setname(string name){
     int namelen=strlen(name);
     if(!isalpha(name[0])){
         cout<<"\nName of the course must begin with an alphabet or a number.";
@@ -83,6 +107,9 @@ string Course::getName(){
 float Course::getExamDuration(){
     return exam_duration;
 }
+string Course::get_teacherid(){
+    return teacherID;
+}
     
 
 
@@ -90,9 +117,6 @@ float Course::getExamDuration(){
 
 
 Core::Core(){
-    quizzes=nullptr;
-    exams=nullptr;
-    assignments=nullptr;
     credithr=3;
 }
 void Core::setpoints(float points){
@@ -123,9 +147,6 @@ string Core::getgrade(){
 
 
 Elective::Elective(){
-    quizzes=nullptr;
-    assignments=nullptr;
-    // final_project=0;
     credithr=2;
 }
 void Elective::setpoints(float points){
@@ -157,8 +178,6 @@ string Elective::getgrade(){
 
 
 Lab::Lab(){
-    quizzes=nullptr;
-    Lab_tasks=nullptr;
     credithr=1;
 }
 void Lab::setpoints(float points){
@@ -187,8 +206,3 @@ string Lab::getgrade(){
     return grade;
 }
 
-
-int main(){
-
-    return 0;
-}
