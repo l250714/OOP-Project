@@ -30,6 +30,10 @@ int Assessments::getTMarks(){
     return totalMarks;
 }
 
+string Assessments::getsectionid(){
+    return sectionid;
+}
+
 void Assessments::setWeight(float weight){
     weightage=weight;
 }
@@ -50,6 +54,10 @@ void Assessments::setNum(int num){
 }
 void Assessments::setTMarks(int total){
     totalMarks=total;
+}
+
+void Assessments::setsectionid(string id){
+    sectionid=id;
 }
 
 
