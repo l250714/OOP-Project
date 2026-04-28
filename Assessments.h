@@ -21,6 +21,7 @@ public:
     float getRawscore();
     int getNum();
     int getTMarks();
+    string getsectionid();
 
     void setWeight(float weight);
     void setMax(float max);
@@ -29,6 +30,7 @@ public:
     void setRawscore(float rawScore);
     void setNum(int num);
     void setTMarks(int total);
+    void setsectionid(string id);
 };
 
 class Quiz: public Assessments{
