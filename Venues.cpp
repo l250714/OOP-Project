@@ -4,8 +4,8 @@
 using namespace std;
 
 
-void Venue::setID(char* ID){
-    if(strlen(ID)!=5){
+void Venue::setID(string ID){
+    if(ID.length()!=5){
         cout<<"\nError: Venue ID must be 5 character long.";
         return;
     }
@@ -22,11 +22,11 @@ void Venue::setID(char* ID){
         return;
     }
     else{
-        this->ID=new char[strlen(ID)+1];
+        this->ID=new char[ID.length()+1];
         for(int i=0;ID[i]!='\0';i++){
             this->ID[i]=ID[i];
         }
-        this->ID[strlen(ID)]='\0';
+        this->ID[ID.length()]='\0';
     }
 }
 void Venue::setCapacity(int cap){
