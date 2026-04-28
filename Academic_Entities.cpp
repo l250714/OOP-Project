@@ -105,12 +105,18 @@ void Regular_Student::displayProfile(){ //printing
 }
 
 float Regular_Student::GPAcalculation(){
-
-}
-float Regular_Student::getGPA(){
-    return gpa;
-}
-float Regular_Student::getSGPA(){
+    int thours=0, achieved=0;
+    thours=(getNumCore()*3)+(getNumElective()*2)+(getNumLab());
+    for(int i=0;i<getNumCore();i++){
+        achieved+=(getCore(i)->getpoints())*3;
+    }
+    for(int i=0;i<getNumElective();i++){
+        achieved+=(getElective(i)->getpoints())*2;
+    }
+    for(int i=0;i<getNumLab();i++){
+        achieved+=(getLab(i)->getpoints());
+    }
+    sgpa=achieved/thours;
     return sgpa;
 }
 string Regular_Student::getType(){
@@ -130,7 +136,9 @@ Scholarship_Student::Scholarship_Student(string id, string name, string email, i
     setgpa(gpa);
 }
 void  Scholarship_Student::displayProfile(){}
-float  Scholarship_Student::GPA(){}
+float  Scholarship_Student::GPAcalculation(){
+    return Regular_Student::GPAcalculation();
+}
 string  Scholarship_Student::getStatus(){
     return status_flag;
 }
@@ -178,6 +186,19 @@ void Teacher::setdesignation(char* desig){
         designation[i]=desig[i];
     }
     designation[strlen(desig)+1]='\0';
+}
+
+void Teacher::setavgFeedback(float feedback){
+    if(feedback>5.0 || feedback< 0.0){
+        cout<<"\nError: Feedback is outside range of 0-5";
+        return;
+    }
+    else{
+        avgFeedback=feedback;
+    }
+}
+float Teacher::getavgFeedback(){
+    return avgFeedback;
 }
 
 string Teacher::getDept(){
