@@ -1,0 +1,3 @@
+0001| Sarah|Regular|3.55| 2| BCS-2E
+0002| Hafsah| Exchange| 3.0| 1| BBA-5A
+0003| Will Byers| Scholarship| 3.5|3|BSE-5B

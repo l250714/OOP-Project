@@ -1,0 +1,22 @@
+Students:
+
+ID | Name | Type | GPA | Semester| Section 
+
+
+Teachers:
+ID | Name | AverageFeedback
+
+Weightages:
+CourseType | Exam% | Assignment% | Quiz%
+
+Courses:
+CourseID | Title | TeacherID | Type
+
+Venues:
+RoomID | Capacity | HasComputers(1/0)
+
+Sections:
+SectionID | CourseID | TeacherID | VenueID | TimeSlot
+
+Assessments:
+SectionID | Type (Exam/Quiz/Assignment) | RawScore |MaxScore | MinScore
