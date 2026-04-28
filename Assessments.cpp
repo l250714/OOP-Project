@@ -1,32 +1,74 @@
 #include <iostream>
 using namespace std;
+#include "allheaders.h"
 
-class Assessments{
-    float weightage;
-    float max,min,avg;
-    int num;    //assessment number
-    float rawscore;
-    int totalMarks;
-};
 
-class Quiz: public Assessments{
-    
-};
+//Assessment base class
+Assessments::Assessments(){
+    weightage=0;
+    max=0, min=0, avg=0, num=0, rawscore=0, totalMarks=0;
+}
+float Assessments::getWeight(){
+    return weightage;
+}
+float Assessments::getMax(){
+    return max;
+}
+float Assessments::getMin(){
+    return min;
+}
+float Assessments::getAvg(){
+    return avg;
+}
+float Assessments::getRawscore(){
+    return rawscore;
+}
+int Assessments::getNum(){
+    return num;
+}
+int Assessments::getTMarks(){
+    return totalMarks;
+}
 
-class Assignment: public Assessments{
-    
-};
+void Assessments::setWeight(float weight){
+    weightage=weight;
+}
+void Assessments::setMax(float max){
+    this->max=max;
+}
+void Assessments::setMin(float min){
+    this->min=min;
+}
+void Assessments::setAvg(float avg){
+    this->avg=avg;
+}
+void Assessments::setRawscore(float rawScore){
+    rawscore=rawScore;
+}
+void Assessments::setNum(int num){
+    this->num=num;
+}
+void Assessments::setTMarks(int total){
+    totalMarks=total;
+}
 
-class Exam: public Assessments{
-    int num_questions;
-    float* marks_perQ;
-};
 
-class Project: public Assessments{
-    
-};
+//Quiz class
+string Quiz:: getType(){
+    return "Quiz";
+}
 
-/* int main(){
+//Assignment class
+string Assignment:: getType(){
+    return "Assignment";
+}
 
-    return 0;
-} */
+//Exam class
+string Exam:: getType(){
+    return "Exam";
+}
+
+//Project class
+string Project:: getType(){
+    return "Project";
+}
