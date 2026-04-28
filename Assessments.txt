@@ -1,31 +1,6 @@
-SectionID | Type | RawScore | MaxScore
-SEC001 | Exam | 72 | 100
-SEC001 | Assignment | 18 | 25
-SEC001 | Quiz | 12 | 15
-SEC002 | Exam | 85 | 100
-SEC002 | Assignment | 22 | 25
-SEC002 | Quiz | 14 | 15
-SEC003 | Exam | 60 | 100
-SEC003 | Assignment | 17 | 25
-SEC003 | Quiz | 10 | 15
-SEC004 | Exam | 78 | 100
-SEC004 | Assignment | 20 | 25
-SEC004 | Quiz | 13 | 15
-SEC005 | Exam | 55 | 100
-SEC005 | Assignment | 15 | 25
-SEC005 | Quiz | 9 | 15
-SEC006 | Exam | 88 | 100
-SEC006 | Assignment | 23 | 25
-SEC006 | Quiz | 14 | 15
-SEC007 | Exam | 70 | 100
-SEC007 | Assignment | 30 | 35
-SEC007 | Quiz | 12 | 15
-SEC008 | Exam | 65 | 100
-SEC008 | Assignment | 28 | 35
-SEC008 | Quiz | 11 | 15
-SEC009 | Exam | 80 | 100
-SEC009 | Assignment | 21 | 25
-SEC009 | Quiz | 13 | 15
-SEC010 | Exam | 74 | 100
-SEC010 | Assignment | 35 | 40
-SEC010 | Quiz | 16 | 20
+SEC003 | Assignment | 17 | 25| 0
+SEC003 | Quiz | 10 | 15| 0
+SEC004 | Exam | 78 | 100| 0
+SEC004 | Assignment | 20 | 25| 0
+SEC004 | Quiz | 13 | 15| 0
+SEC005 | Exam | 55 | 100| 0
