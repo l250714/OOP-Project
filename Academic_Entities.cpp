@@ -1,8 +1,6 @@
 #include <iostream>
 #include <cctype>
-#include "Courses.h"
-#include "Assessments.h"
-#include "Academic_Entities.h"
+#include "allheaders.h"
 using namespace std;
 
 //Academic Entity class
@@ -16,8 +14,23 @@ string AcademicEntity:: getEmail(){
 string AcademicEntity:: getID(){
     return ID;
 }
-int AcademicEntity:: getNumCourses(){
-    return num_courses;
+int AcademicEntity::getNumCore(){
+    return num_core;
+}
+int AcademicEntity::getNumElective(){
+    return num_elective;
+}
+int AcademicEntity::getNumLab(){
+    return num_lab;
+}
+Core* AcademicEntity::getCore(int i){
+    return &core[i];
+}
+Elective* AcademicEntity::getElective(int i){
+    return &elective[i];
+}
+Lab* AcademicEntity::getLab(int i){
+    return &labs[i];
 }
 
 void AcademicEntity:: setName(string name){
@@ -29,16 +42,21 @@ void AcademicEntity:: setEmail(string email){
 void AcademicEntity:: setID(string ID){
     this->ID=ID;
 }
-void AcademicEntity:: setNumCourses(int num){
-    num_courses=num;
+void AcademicEntity:: setNumCore(int num){
+    num_core=num;
+}
+void AcademicEntity:: setNumElective(int num){
+    num_elective=num;
+}
+void AcademicEntity:: setNumLab(int num){
+    num_lab=num;
 }
 
 
+
 //Student class
-void Student::calculateGPA(){}
-void Student::viewTranscript(){}
-char* Student::getcourses(){
-    
+void Student::viewTranscript(){     //printing
+
 }
 int Student::getSemester(){
     return semester;
@@ -69,7 +87,23 @@ void Student::setSemester(int sem){
 }
 
 //Regular Student class
-void Regular_Student::displayProfile(){}
+Regular_Student::Regular_Student(){
+    setID("0000");
+    setName("xyz");
+    setEmail("xyz@nowehere.com");
+    setSemester(0);
+}
+Regular_Student::Regular_Student(string id,string name, string email, int semester,float gpa){
+    setID(id);
+    setName(name);
+    setEmail(email);
+    setSemester(semester);
+    this->gpa=gpa;
+}
+void Regular_Student::displayProfile(){ //printing
+
+}
+
 float Regular_Student::GPAcalculation(){
 
 }
@@ -79,8 +113,22 @@ float Regular_Student::getGPA(){
 float Regular_Student::getSGPA(){
     return sgpa;
 }
+string Regular_Student::getType(){
+    return "Regular";
+}
+void Regular_Student::setgpa(float gpa){
+    this->gpa=gpa;
+}
+
 
 //Scholarship Student class
+Scholarship_Student::Scholarship_Student(string id, string name, string email, int semester, float gpa){
+    setID(id);
+    setEmail(email);
+    setName(name);
+    setSemester(semester);
+    setgpa(gpa);
+}
 void  Scholarship_Student::displayProfile(){}
 float  Scholarship_Student::GPA(){}
 string  Scholarship_Student::getStatus(){
@@ -102,10 +150,24 @@ void Scholarship_Student::setStatus(string status){
     
 }
 
-//Exchange Student Class
+string Scholarship_Student::getType(){
+    return "Scholarship";
+}
 
+
+//Exchange Student Class
+Exchange_Student::Exchange_Student(string id,string name, string email, int semester){
+    setID(id);
+    setEmail(email);
+    setName(name);
+    setSemester(semester);
+}
 void Exchange_Student::displayProfile(){}
 bool Exchange_Student::grading(){}   //either pass or fail
+string Exchange_Student::getType(){
+    return "Exchange";
+}
+
 
 //Teacher Class
 void Teacher::setdepartment(string dept){
