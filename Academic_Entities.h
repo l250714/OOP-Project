@@ -41,6 +41,7 @@ public:
     //void updateCourse(char );    
     void setSemester(int sem);
     virtual string getType()=0;
+    virtual float GPAcalculation() = 0;
 };
 class Regular_Student: public Student{
     float gpa;  //CGPA
@@ -52,8 +53,6 @@ public:
     void displayProfile();
     float GPAcalculation();
     string getType();
-    float getGPA();
-    float getSGPA();
     void setgpa(float gpa);
 };
 
@@ -62,10 +61,10 @@ class Scholarship_Student: public Regular_Student{
 public:
     Scholarship_Student(string id, string name, string email, int semester, float gpa);
     void displayProfile();
-    //float GPA();
     string getType();
     string getStatus();
     void setStatus(string status);
+    float GPAcalculation();  
 };
 
 class Exchange_Student: public Student{
@@ -74,6 +73,7 @@ public:
     string getType();
     void displayProfile();
     bool grading();     //either pass or fail
+    float GPAcalculation() override {return -1;}    //since we do not need to calculate the gpa of an exchange student
 };
 
 
@@ -83,7 +83,8 @@ class Teacher: public AcademicEntity{
 public:
     void setdepartment(string dept);
     void setdesignation(char* desig);
-
+    void setavgFeedback(float feedback);
+    float getavgFeedback();
     string getDept();
     string getDesignation();
     void displayProfile();
