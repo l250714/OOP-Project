@@ -31,19 +31,24 @@ public:
     void setNum(int num);
     void setTMarks(int total);
     void setsectionid(string id);
+    virtual ~Assessments();
 };
 
 class Quiz: public Assessments{
     
 public:
+    Quiz();
    string getType();
+    ~Quiz();
    
 };
 
 class Assignment: public Assessments{
 
 public:
+    Assignment();
    string getType();
+    ~Assignment();
 };
 
 class Exam: public Assessments{
@@ -52,12 +57,15 @@ class Exam: public Assessments{
 public:
     Exam();
     string getType();
+    ~Exam();
 };
 
 class Project: public Assessments{
 
 public:
+    Project();
     string getType();
+    ~Project();
 };
 
 #endif
