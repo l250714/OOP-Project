@@ -62,21 +62,26 @@ void Assessments::setsectionid(string id){
 
 
 //Quiz class
+Quiz::Quiz(){
+}
 string Quiz:: getType(){
     return "Quiz";
 }
 
 //Assignment class
+Assignment::Assignment(){}
 string Assignment:: getType(){
     return "Assignment";
 }
 
 //Exam class
+Exam::Exam(){}
 string Exam:: getType(){
     return "Exam";
 }
 
 //Project class
+Project::Project(){}
 string Project:: getType(){
     return "Project";
 }
