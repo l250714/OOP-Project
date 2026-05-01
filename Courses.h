@@ -30,6 +30,7 @@ public:
     string getName();
     float getExamDuration();
     Student& getStudent(int i);
+    virtual ~Course();
     
 };
 
@@ -54,6 +55,7 @@ public:
     Exam& getExam(int i);
     Quiz& getQuiz(int i);
     Assignment& getAssignment(int i);
+    ~Core();
 
 };
 
@@ -74,6 +76,7 @@ public:
     string getgrade();
      Quiz& getQuiz(int i);
     Assignment& getLabTasks(int i);
+    ~Elective();
 };
 
 class Lab: public Course{
@@ -91,6 +94,7 @@ public:
     Assignment& getAssignment(int i);
     float getpoints();
     string getgrade();
+    ~Lab();
 };
 
 
