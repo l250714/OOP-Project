@@ -12,7 +12,7 @@ class AcademicEntity{
     Core *core; Elective *elective; Lab *labs;
 public:
     virtual void displayProfile()=0;
-
+    AcademicEntity();
     string getName();
     string getEmail();
     string getID();
@@ -29,11 +29,13 @@ public:
     void setNumCore(int num);
     void setNumElective(int num);
     void setNumLab(int num);
+    virtual ~AcademicEntity();
 };
 
 class Student: public AcademicEntity{      
     int semester;
 public:
+    Student();
     void viewTranscript();
     int getSemester();
     void displayProfile();
@@ -42,6 +44,7 @@ public:
     void setSemester(int sem);
     virtual string getType()=0;
     virtual float GPAcalculation() = 0;
+    virtual ~Student();
 };
 class Regular_Student: public Student{
     float gpa;  //CGPA
@@ -54,26 +57,31 @@ public:
     float GPAcalculation();
     string getType();
     void setgpa(float gpa);
+    ~Regular_Student();
 };
 
 class Scholarship_Student: public Regular_Student{
     string status_flag;
 public:
+    Scholarship_Student();
     Scholarship_Student(string id, string name, string email, int semester, float gpa);
     void displayProfile();
     string getType();
     string getStatus();
     void setStatus(string status);
     float GPAcalculation();  
+    ~Scholarship_Student();
 };
 
 class Exchange_Student: public Student{
 public:
+    Exchange_Student();
     Exchange_Student(string id,string name, string email, int semester);
     string getType();
     void displayProfile();
     bool grading();     //either pass or fail
     float GPAcalculation() override {return -1;}    //since we do not need to calculate the gpa of an exchange student
+    ~Exchange_Student();
 };
 
 
@@ -81,6 +89,7 @@ class Teacher: public AcademicEntity{
     string department;
     char*designation;
 public:
+    Teacher();
     void setdepartment(string dept);
     void setdesignation(char* desig);
     void setavgFeedback(float feedback);
@@ -88,6 +97,7 @@ public:
     string getDept();
     string getDesignation();
     void displayProfile();
+    ~Teacher();
 
 };
 
