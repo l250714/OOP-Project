@@ -59,6 +59,7 @@ void Assessments::setTMarks(int total){
 void Assessments::setsectionid(string id){
     sectionid=id;
 }
+Assessments::~Assessments(){}
 
 
 //Quiz class
@@ -67,21 +68,25 @@ Quiz::Quiz(){
 string Quiz:: getType(){
     return "Quiz";
 }
+Quiz::~Quiz(){}
 
 //Assignment class
 Assignment::Assignment(){}
 string Assignment:: getType(){
     return "Assignment";
 }
+Assignment::~Assignment(){}
 
 //Exam class
 Exam::Exam(){}
 string Exam:: getType(){
     return "Exam";
 }
+Exam::~Exam(){}
 
 //Project class
 Project::Project(){}
 string Project:: getType(){
     return "Project";
 }
+Project::~Project(){}
