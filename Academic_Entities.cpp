@@ -5,6 +5,17 @@ using namespace std;
 
 //Academic Entity class
 
+AcademicEntity:: AcademicEntity(){
+    name="none";
+    email="none";
+    ID="xxx";
+    num_core=0;
+    num_elective=0;
+    num_lab=0;
+    core=nullptr;
+    elective=nullptr;
+    labs=nullptr;
+}
 string AcademicEntity:: getName(){
     return name;
 }
@@ -51,10 +62,21 @@ void AcademicEntity:: setNumElective(int num){
 void AcademicEntity:: setNumLab(int num){
     num_lab=num;
 }
+AcademicEntity::~AcademicEntity(){
+    delete[] core;
+    delete [] elective;
+    delete [] labs;
+}
 
 
 
 //Student class
+Student::Student(){
+    setID("0000");
+    setName("xyz");
+    setEmail("xyz@nowehere.com");
+    semester=0;
+}
 void Student::viewTranscript(){     //printing
 
 }
@@ -85,6 +107,7 @@ void Student::displayProfile(){}
 void Student::setSemester(int sem){
     semester=sem;
 }
+Student::~Student(){}
 
 //Regular Student class
 Regular_Student::Regular_Student(){
@@ -125,9 +148,16 @@ string Regular_Student::getType(){
 void Regular_Student::setgpa(float gpa){
     this->gpa=gpa;
 }
-
+Regular_Student::~Regular_Student(){}
 
 //Scholarship Student class
+Scholarship_Student::Scholarship_Student(){
+    status_flag="probation";
+    setID("0000");
+    setName("xyz");
+    setEmail("xyz@nowehere.com");
+    setSemester(0);
+}
 Scholarship_Student::Scholarship_Student(string id, string name, string email, int semester, float gpa){
     setID(id);
     setEmail(email);
@@ -161,9 +191,15 @@ void Scholarship_Student::setStatus(string status){
 string Scholarship_Student::getType(){
     return "Scholarship";
 }
-
+Scholarship_Student::~Scholarship_Student(){}
 
 //Exchange Student Class
+Exchange_Student::Exchange_Student(){
+    setID("0000");
+    setName("xyz");
+    setEmail("xyz@nowehere.com");
+    setSemester(0);
+}
 Exchange_Student::Exchange_Student(string id,string name, string email, int semester){
     setID(id);
     setEmail(email);
@@ -175,9 +211,17 @@ bool Exchange_Student::grading(){}   //either pass or fail
 string Exchange_Student::getType(){
     return "Exchange";
 }
-
+Exchange_Student::~Exchange_Student(){}
 
 //Teacher Class
+Teacher::Teacher(){
+    setID("0000");
+    setName("xyz");
+    setEmail("xyz@nowehere.com");
+    department="xyz";
+    designation="none";
+    avgFeedback=0.0;
+}
 void Teacher::setdepartment(string dept){
     dept=department;
 }
@@ -212,5 +256,6 @@ string Teacher::getDesignation(){
     return temp;
 }
 void Teacher::displayProfile(){}
+Teacher::~Teacher(){}
 
 
