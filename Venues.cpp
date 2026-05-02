@@ -3,7 +3,11 @@
 #include "Venues.h"
 using namespace std;
 
-
+Venue::Venue(){
+    ID="none";
+    capacity=0;
+    has_computers=0;
+}
 void Venue::setID(string ID){
     if(ID.length()!=5){
         cout<<"\nError: Venue ID must be 5 character long.";
@@ -54,4 +58,5 @@ int Venue::getCapacity(){
 bool Venue::getComputers(){
     return has_computers;
 }
+Venue::~Venue(){}
 
