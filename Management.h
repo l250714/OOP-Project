@@ -25,6 +25,7 @@ public:
     Venue& getVenue();
     string getSectionID();
     string getTimings();
+    ~section_course();
 };
 
 void Scheduler();
