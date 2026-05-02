@@ -70,7 +70,7 @@ string section_course::getSectionID(){
 string section_course::getTimings(){
     return timings;
 }
-
+section_course::~section_course(){}
 /* void DataBaseManager(){
 
 }
