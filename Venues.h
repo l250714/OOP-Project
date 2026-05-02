@@ -9,12 +9,14 @@ class Venue{
     int capacity;
     bool has_computers;
 public:
+    Venue();
     void setID(string);
     void setCapacity(int cap);
     void setComputer(bool comp);
     string getID();
     int getCapacity();
     bool getComputers();
+    ~Venue();
 };
 
 #endif
