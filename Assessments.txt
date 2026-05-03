@@ -1,6 +1,13 @@
-SEC003 | Assignment | 17 | 25| 0
-SEC003 | Quiz | 10 | 15| 0
-SEC004 | Exam | 78 | 100| 0
-SEC004 | Assignment | 20 | 25| 0
-SEC004 | Quiz | 13 | 15| 0
-SEC005 | Exam | 55 | 100| 0
+SEC001 | S0714|  Exam | 72 | 100| 0
+SEC001 | S0714| Assignment | 18 | 25| 0
+SEC001 | S0714| Quiz | 12 | 15| 0
+SEC002 | S0714| Exam | 85 | 100| 0
+SEC002 | S0714| Assignment | 22 | 25| 0
+SEC002 | S0714| Quiz | 14 | 15| 0
+SEC003 | S0714| Exam | 60 | 100| 0
+SEC003 | S0714| Assignment | 17 | 25| 0
+SEC003 | S0714| Quiz | 10 | 15| 0
+SEC004 | S0714| Exam | 78 | 100| 0
+SEC004 | S0714| Assignment | 20 | 25| 0
+SEC004 | S0714| Quiz | 13 | 15| 0
+SEC005 | S0714| Exam | 55 | 100| 0
