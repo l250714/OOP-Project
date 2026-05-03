@@ -1,7 +1,11 @@
 #include <iostream>
 #include <string.h>
 #include <vector>
-#include "allheaders.h"
+#include "Academic_Entities.h"
+#include "Assessments.h"
+#include "Courses.h"
+#include "Management.h"
+#include "Venues.h"
 using namespace std;
 //think about schedule and timings and venue
 
