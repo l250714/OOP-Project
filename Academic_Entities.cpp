@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cctype>
 #include "Courses.h"
+#include "Academic_Entities.h"
 using namespace std;
 
 //Academic Entity class
