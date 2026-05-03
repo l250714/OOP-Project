@@ -22,6 +22,7 @@ public:
     int getNum();
     int getTMarks();
     string getsectionid();
+    string getStudentID();
 
     void setWeight(float weight);
     void setMax(float max);
@@ -31,6 +32,7 @@ public:
     void setNum(int num);
     void setTMarks(int total);
     void setsectionid(string id);
+    void setStudentID(string id);
     virtual ~Assessments();
 };
 
