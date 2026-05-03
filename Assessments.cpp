@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-#include "allheaders.h"
+#include "Assessments.h"
 
 
 //Assessment base class
@@ -33,6 +33,9 @@ int Assessments::getTMarks(){
 string Assessments::getsectionid(){
     return sectionid;
 }
+string Assessments::getStudentID() {
+    return StudentID;
+}
 
 void Assessments::setWeight(float weight){
     weightage=weight;
@@ -58,6 +61,9 @@ void Assessments::setTMarks(int total){
 
 void Assessments::setsectionid(string id){
     sectionid=id;
+}
+void Assessments::setStudentID(string id) {
+    StudentID = id;
 }
 Assessments::~Assessments(){}
 
