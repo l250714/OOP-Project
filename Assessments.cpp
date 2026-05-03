@@ -7,6 +7,7 @@ using namespace std;
 Assessments::Assessments(){
     weightage=0;
     max=0, min=0, avg=0, num=0, rawscore=0, totalMarks=0;
+    StudentID = "none";
 }
 float Assessments::getWeight(){
     return weightage;
