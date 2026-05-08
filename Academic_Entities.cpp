@@ -116,6 +116,7 @@ Regular_Student::Regular_Student(){
     setName("xyz");
     setEmail("xyz@nowehere.com");
     setSemester(0);
+    gpa=0.0;
 }
 Regular_Student::Regular_Student(string id,string name, string email, int semester,float gpa){
     setID(id);
@@ -226,11 +227,8 @@ Teacher::Teacher(){
 void Teacher::setdepartment(string dept){
     dept=department;
 }
-void Teacher::setdesignation(char* desig){
-    for(int i=0;desig[i]!='\0';i++){
-        designation[i]=desig[i];
-    }
-    designation[strlen(desig)+1]='\0';
+void Teacher::setdesignation(string desig){
+    designation = desig;
 }
 
 void Teacher::setavgFeedback(float feedback){
@@ -250,11 +248,7 @@ string Teacher::getDept(){
     return department;
 }
 string Teacher::getDesignation(){
-    string temp="";
-    for(int i=0;designation[i]!='\0';i++){
-        temp+=designation[i];
-    }
-    return temp;
+    return designation;
 }
 void Teacher::displayProfile(){}
 Teacher::~Teacher(){}
