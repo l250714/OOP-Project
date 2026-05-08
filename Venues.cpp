@@ -9,29 +9,7 @@ Venue::Venue(){
     has_computers=0;
 }
 void Venue::setID(string ID){
-    if(ID.length()!=5){
-        cout<<"\nError: Venue ID must be 5 character long.";
-        return;
-    }
-    else if(!isalpha(ID[0])){
-        cout<<"\nError: Venue ID must begin with a letter.";
-        return;
-    }
-    else if(ID[1]!='-'){
-        cout<<"\nError: Venue ID must have a '-' after the first alphabet.";
-        return;
-    }
-    else if(!isdigit(ID[2]) || !isdigit(ID[3]) || !isdigit(ID[4])){
-        cout<<"\nError: Venue ID must have 3 digits at the end.";
-        return;
-    }
-    else{
-        this->ID=new char[ID.length()+1];
-        for(int i=0;ID[i]!='\0';i++){
-            this->ID[i]=ID[i];
-        }
-        this->ID[ID.length()]='\0';
-    }
+    this->ID = ID;
 }
 void Venue::setCapacity(int cap){
     if(cap>0 && cap<300){
@@ -46,11 +24,7 @@ void Venue::setComputer(bool comp){
 }
 
 string Venue::getID(){
-    string temp="";
-    for(int i=0;ID[i]!='\0';i++){
-        temp+=ID[i];
-    }
-    return temp;
+    return ID;
 }
 int Venue::getCapacity(){
     return capacity;
