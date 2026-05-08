@@ -18,71 +18,17 @@ Course::Course(){
     TAssignments=0;
     exam_duration=0;        //has to be decided
 }
-void Course::set_ID(const char* id){
+void Course::set_ID(string id){
     //course ID must be alphanumeric and not longer than 7
-    int idlen=strlen(id);
-    if(idlen>7){
-        cout<<"\nError: Course Code is Invalid. Please Try Again.";
-        return;
-    }
-    for(int i=0;id[i]!='\0';i++){
-        if(iswalnum(id[i])){
-            continue;
-        }
-        else{
-            cout<<"\nError: Course Code must only contain alphanumeric characters.";
-            return;
-        }
-    }
-    ID=new char[idlen+1];
-    for(int i=0;id[i]!='\0';i++){
-        ID[i]=id[i];
-    }
-    ID[idlen]='\0';
+    ID=id;
 }
 void Course::set_teacherID(string id){
     //course ID must be alphanumeric and not longer than 7
-    int idlen=id.length();
-    if(idlen>4){
-        cout<<"\nError: Course Code is Invalid. Please Try Again.";
-        return;
-    }
-    for(int i=0;id[i]!='\0';i++){
-        if(iswalnum(id[i])){
-            continue;
-        }
-        else{
-            cout<<"\nError: Teacher ID must only contain alphanumeric characters.";
-            return;
-        }
-    }
-    teacherID=new char[idlen+1];
-    for(int i=0;id[i]!='\0';i++){
-        teacherID[i]=id[i];
-    }
-    teacherID[idlen]='\0';
+   teacherID=id;
 }
 
 void Course::setname(string name){
-    int namelen=strlen(name);
-    if(!isalpha(name[0])){
-        cout<<"\nName of the course must begin with an alphabet or a number.";
-        return;
-    }
-    else{
-        this->name=new char[namelen+1];
-        for(int i=0;i<namelen;i++){
-            if(iswalnum(name[i])){
-                this->name[i]=name[i];
-            }
-            else{
-                cout<<"\nError: Course Name must only contain alphanumeric characters.";
-                return;
-            }
-            
-        }
-        this->name[namelen]='\0';
-    }
+    this->name = name;
 }
 void Course::setExamduration(float time){
     //min time: 1hr & max time: 3hr
@@ -126,18 +72,10 @@ Student& Course::getStudent(int i){
 }
 
 string Course::getID(){
-    string temp="";
-    for(int i=0;ID[i]!='\0';i++){
-        temp+=ID[i];
-    }
-    return temp;
+        return ID;
 }
 string Course::getName(){
-    string temp="";
-    for(int i=0;name[i]!='\0';i++){
-        temp+=name[i];
-    }
-    return temp;
+   return name;
 }
 float Course::getExamDuration(){
     return exam_duration;
