@@ -26,21 +26,23 @@ string trim(const string& line){
     return line.substr(start, end-start+1);
 }
 
-void readStudentdata(){
-    Student *s;
-    ifstream students("Students.txt");
-    string id,name,email,type, gpa,section,semester,line;
+    if (!students.is_open()) {
+        cout << "\nError opening file!" << endl;
+        return;
+    }
     while (getline(students, line)) {
+        if (line.empty()) continue;
         istringstream ss(line);
         getline(ss, id, '|');
-        getline(ss, name, '|');
         getline(ss, email, '|');
+        getline(ss, name, '|');
         getline(ss, type, '|');
         getline(ss, gpa, '|');
-        getline(ss, section, '|');
         getline(ss, semester, '|');
+        getline(ss, section, '|');
         id=trim(id); name=trim(name); type=trim(type);
         gpa=trim(gpa); semester=trim(semester);
+        //cout << semester;
         if(type=="Regular"){
             s=new Regular_Student(id,name,email,stoi(semester),stof(gpa));
         }
@@ -50,16 +52,25 @@ void readStudentdata(){
         else if(type=="Scholarship"){
             s=new Scholarship_Student(id,name,email,stoi(semester),stof(gpa));
         }
+        else {
+            s = nullptr;
+        }
         studentinfo.push_back(s);
+        //cout << endl << studentinfo[0]->getID();
    }
     students.close();
 }
 
 void readCoursesdata(){     
     Course *c;
-    ifstream course("Students.txt");
+    ifstream course("C:\\Users\\hp\\OneDrive\\Desktop\\Uni study\\Sem 2\\OOP\\Project ver 2\\text files\\Courses.txt");
     string id,name,teacherid,c_type,line1;
+    if (!course.is_open()) {
+        cout << "\nError opening file!" << endl;
+        return;
+    }
     while (getline(course, line1)) {
+        if (line1.empty()) continue;
         istringstream ss(line1);
         getline(ss, id, '|');
         getline(ss, name, '|');
@@ -68,12 +79,16 @@ void readCoursesdata(){
         id=trim(id); name=trim(name); c_type=trim(c_type); teacherid=trim(teacherid);
         if(c_type=="Core"){
             c=new Core;
+
         }
         else if(c_type=="Elective"){
             c=new Elective;
         }
         else if(c_type=="Lab"){
             c=new Lab;
+        }
+        else {  //this will never happen but just a precaution
+            c = nullptr;
         }
         c->set_ID(id);
         c->set_teacherID(teacherid);
@@ -85,9 +100,14 @@ void readCoursesdata(){
 
 void readTeachersdata(){
     Teacher t;
-    ifstream teachers("Teachers.txt");
+    ifstream teachers("C:\\Users\\hp\\OneDrive\\Desktop\\Uni study\\Sem 2\\OOP\\Project ver 2\\text files\\Teachers.txt");
     string id,name,feedback,line;
+    if (!teachers.is_open()) {
+        cout << "\nError opening file!" << endl;
+        return;
+    }
     while (getline(teachers, line)) {
+        if (line.empty()) continue;
         istringstream ss(line);
         getline(ss, id, '|');
         getline(ss, name, '|');
@@ -103,9 +123,14 @@ void readTeachersdata(){
 
 void readVenuesdata(){
     Venue v;
-    ifstream venues("Venues.txt");
+    ifstream venues("C:\\Users\\hp\\OneDrive\\Desktop\\Uni study\\Sem 2\\OOP\\Project ver 2\\text files\\Venues.txt");
     string id,capacity,hasComp,line;
+    if (!venues.is_open()) {
+        cout << "\nError opening file!" << endl;
+        return;
+    }
     while (getline(venues, line)) {
+        if (line.empty()) continue;
         istringstream ss(line);
         getline(ss, id, '|');
         getline(ss, capacity, '|');
@@ -121,10 +146,15 @@ void readVenuesdata(){
 
 void readSectionsdata(){
     section_course s;
-    ifstream sections("Sections.txt");
+    ifstream sections("C:\\Users\\hp\\OneDrive\\Desktop\\Uni study\\Sem 2\\OOP\\Project ver 2\\text files\\Sections.txt");
     string sectionid,courseid,teacherid,venueid, timing,line;
+    if (!sections.is_open()) {
+        cout << "\nError opening file!" << endl;
+        return;
+    }
     while (getline(sections, line)) {
         istringstream ss(line);     //Input-only stream for strings.
+        if (line.empty()) continue;
         getline(ss, sectionid, '|');
         getline(ss, courseid, '|');
         getline(ss, teacherid, '|');
@@ -161,7 +191,7 @@ void readSectionsdata(){
 }
 
 void readWeightagesdata(){
-    ifstream weights("Weightages.txt");
+    ifstream weights("C:\\Users\\hp\\source\\repos\\Projectver2\\Projectver2\\Weightages.txt");
     string w_type,exam,assignment,quiz,line2;
     struct W{
         float exam;
@@ -169,7 +199,12 @@ void readWeightagesdata(){
         float quiz;
     };
     W weightstore[3];   //0: core; 1: elective; 2: lab
+    if (!weights.is_open()) {
+        cout << "\nError opening file!" << endl;
+        return;
+    }
     while (getline(weights, line2)) {
+        if (line2.empty()) continue;
         istringstream ss(line2);
         getline(ss, w_type, '|');
         getline(ss, exam, '|');
@@ -193,37 +228,63 @@ void readWeightagesdata(){
         }
    }
     weights.close();
-}
+} 
 
 void readAssessmentsdata(){
-    //SectionID | Type (Exam/Quiz/Assignment) | RawScore |MaxScore | MinScore
-    Assessments* a;
-    ifstream assess("Assessments.txt");
-    string id,type,rawscore,maxscore,minscore,line;
-    while (getline(assess, line)) {
+    //SectionID | StudentID| Type (Exam/Quiz/Assignment) | RawScore |MaxScore | MinScore
+    Assessments* a=nullptr;
+    ifstream assess("C:\\Users\\hp\\OneDrive\\Desktop\\Uni study\\Sem 2\\OOP\\Project\\Assessments.txt");
+    string id,stdID,type,rawscore,maxscore,minscore,line;
+    if (!assess.is_open()) {
+        cout << "\nError opening file!" << endl;
+        return;
+    }
+    while (getline(assess, line)) {     
         istringstream ss(line);
+        if (line.empty()) continue;
+
+        // Parse all 5 delimited fields
         getline(ss, id, '|');
+        getline(ss, stdID, '|');
         getline(ss, type, '|');
         getline(ss, rawscore, '|');
-        id=trim(id); type=trim(type); rawscore=trim(rawscore);maxscore=trim(maxscore);minscore=trim(minscore);
-        if(type=="Exam"){
-            a=new Exam;
+        getline(ss, maxscore, '|');
+        getline(ss, minscore, '|');
+
+        id = trim(id);
+        stdID = trim(stdID);
+        type = trim(type);
+        rawscore = trim(rawscore);
+        maxscore = trim(maxscore);
+        minscore = trim(minscore);
+
+        if (type == "Exam") {
+            a = new Exam;
         }
-        else if(type=="Assignment"){
-            a=new Assignment;
+        else if (type == "Assignment") {
+            a = new Assignment;
         }
-        else if(type=="Quiz"){
-            a= new Quiz;
+        else if (type == "Quiz") {
+            a = new Quiz;
         }
-        else if(type=="Project"){
-            a=new Project;
+        else if (type == "Project") {
+            a = new Project;
         }
-        a->setsectionid(id);
-        a->setRawscore(stoi(rawscore));
-        a->setMax(stoi(maxscore));
-        a->setMin(stoi(minscore));
-        assesssmentinfo.push_back(a);
-   }
+        else {
+            a = nullptr; 
+            return;
+        }
+        if (a && ss) {      //making sure data is valid
+            a->setsectionid(id);
+            a->setStudentID(stdID);
+            a->setRawscore(stof(rawscore));
+            a->setMax(stof(maxscore));
+            a->setMin(stof(minscore));
+            assesssmentinfo.push_back(a);
+            //cout << "\nSize: " << assesssmentinfo.size();
+        }
+    }       
     assess.close();
+}
 }
 
