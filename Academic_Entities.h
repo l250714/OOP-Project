@@ -29,6 +29,9 @@ public:
     void setNumCore(int num);
     void setNumElective(int num);
     void setNumLab(int num);
+    void setCore(Core& obj);
+    void setElective(Elective& obj);
+    void setLab(Lab& obj);
     virtual ~AcademicEntity();
 };
 
@@ -40,7 +43,9 @@ public:
     int getSemester();
     void displayProfile();
     /* void addCourse(char* course);*/
-    //void updateCourse(char );    
+    //void updateCourse(char );   
+    string getSection();
+    void setSection(string section);
     void setSemester(int sem);
     virtual string getType()=0;
     virtual float GPAcalculation() = 0;
@@ -91,7 +96,7 @@ class Teacher: public AcademicEntity{
 public:
     Teacher();
     void setdepartment(string dept);
-    void setdesignation(char* desig);
+    void setdesignation(string desig);
     void setavgFeedback(float feedback);
     float getavgFeedback();
     string getDept();
