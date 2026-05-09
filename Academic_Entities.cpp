@@ -55,13 +55,49 @@ void AcademicEntity:: setID(string ID){
     this->ID=ID;
 }
 void AcademicEntity:: setNumCore(int num){
-    num_core=num;
+    delete[] core;
+    num_core = num;
+    core = (num > 0) ? new Core[num] : nullptr;
 }
 void AcademicEntity:: setNumElective(int num){
-    num_elective=num;
+    delete[] elective;
+    num_elective = num;
+    elective = (num > 0) ? new Elective[num] : nullptr;
 }
 void AcademicEntity:: setNumLab(int num){
-    num_lab=num;
+    delete[] labs;
+    num_lab = num;
+    labs = (num > 0) ? new Lab[num] : nullptr;
+}
+void AcademicEntity::setCore(Core& obj) {
+    for (int i = 0; i < num_core; i++) {
+        if (core[i].getID() == "none" || core[i].getID().empty()) {
+            core[i].set_ID(obj.getID());
+            core[i].setname(obj.getName());
+            core[i].set_teacherID(obj.get_teacherid());
+            return;
+        }
+    }
+}
+void AcademicEntity::setElective(Elective& obj) {
+    for (int i = 0; i < num_elective; i++) {
+        if (elective[i].getID() == "none" || elective[i].getID().empty()) {
+            elective[i].set_ID(obj.getID());
+            elective[i].setname(obj.getName());
+            elective[i].set_teacherID(obj.get_teacherid());
+            return;
+        }
+    }
+}
+void AcademicEntity::setLab(Lab& obj) {
+    for (int i = 0; i < num_lab; i++) {
+        if (labs[i].getID() == "none" || labs[i].getID().empty()) {
+            labs[i].set_ID(obj.getID());
+            labs[i].setname(obj.getName());
+            labs[i].set_teacherID(obj.get_teacherid());
+            return;
+        }
+    }
 }
 AcademicEntity::~AcademicEntity(){
     delete[] core;
@@ -108,6 +144,12 @@ void Student::displayProfile(){}
 void Student::setSemester(int sem){
     semester=sem;
 }
+string Student::getSection() {
+    return section;
+}
+void Student::setSection(string section) {
+    this->section = section;
+}
 Student::~Student(){}
 
 //Regular Student class
@@ -126,7 +168,10 @@ Regular_Student::Regular_Student(string id,string name, string email, int semest
     this->gpa=gpa;
 }
 void Regular_Student::displayProfile(){ //printing
-
+    //Name, ID, Semester,Section, Email, gpa, number of courses
+    cout << endl << "Student Name: " << this->getName() << endl << "Student ID: " << this->getID() << endl << "Semester: " << this->getSemester()
+        << endl << "Section: " << this->getSection() << endl << "Email: " << this->getEmail() << endl << "GPA: " << this->GPAcalculation() << endl
+        << "Number of Registered Courses: " << this->getNumCore() + this->getNumElective() + this->getNumLab();
 }
 
 float Regular_Student::GPAcalculation(){
@@ -167,7 +212,12 @@ Scholarship_Student::Scholarship_Student(string id, string name, string email, i
     setSemester(semester);
     setgpa(gpa);
 }
-void  Scholarship_Student::displayProfile(){}
+void  Scholarship_Student::displayProfile(){//printing
+    //Name, ID, Semester,Section, Email, gpa,status, number of courses
+    cout << endl << "Student Name: " << this->getName() << endl << "Student ID: " << this->getID() << endl << "Semester: " << this->getSemester()
+        << endl << "Section: " << this->getSection() << endl << "Email: " << this->getEmail() << endl << "GPA: " << this->GPAcalculation() << endl << "Status: " << this->getStatus()
+        << "Number of Registered Courses: " << this->getNumCore() + this->getNumElective() + this->getNumLab();
+}
 float  Scholarship_Student::GPAcalculation(){
     return Regular_Student::GPAcalculation();
 }
@@ -208,7 +258,12 @@ Exchange_Student::Exchange_Student(string id,string name, string email, int seme
     setName(name);
     setSemester(semester);
 }
-void Exchange_Student::displayProfile(){}
+void Exchange_Student::displayProfile(){    //printing
+    //Name, ID, Semester,Section, Email, gpa, number of courses
+    cout << endl << "Student Name: " << this->getName() << endl << "Student ID: " << this->getID() << endl << "Semester: " << this->getSemester()
+        << endl << "Section: " << this->getSection() << endl << "Email: " << this->getEmail()  << endl
+        << "Number of Registered Courses: " << this->getNumCore() + this->getNumElective() + this->getNumLab();
+}
 bool Exchange_Student::grading(){}   //either pass or fail
 string Exchange_Student::getType(){
     return "Exchange";
