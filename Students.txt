@@ -1,3 +1,20 @@
-0001| Sarah|Regular|3.55| 2| BCS-2E
-0002| Hafsah| Exchange| 3.0| 1| BBA-5A
-0003| Will Byers| Scholarship| 3.5|3|BSE-5B
+S1001 | Ali Raza | S1001@nu.edu.pk | Regular | 3.21 | 2 | BCS-2A
+S1002 | Sara Khan | S1002@nu.edu.pk | Scholarship | 3.88 | 2 | BCS-2A
+S1003 | Ahmed Noor | S1003@nu.edu.pk | Regular | 2.95 | 1 | BCS-1B
+S1004 | Fatima Zahra | S1004@nu.edu.pk | Exchange | 0.0 | 3 | BCS-3C
+S1005 | Hassan Iqbal | S1005@nu.edu.pk | Regular | 2.67 | 4 | BSE-4A
+S1006 | Ayesha Malik | S1006@nu.edu.pk | Scholarship | 3.92 | 5 | BSE-5B
+S1007 | Bilal Ahmed | S1007@nu.edu.pk | Regular | 3.10 | 6 | BBA-6A
+S1008 | Hina Tariq | S1008@nu.edu.pk | Exchange | 0.0 | 7 | BCS-7D
+S1009 | Umar Farooq | S1009@nu.edu.pk | Regular | 2.48 | 8 | BSE-8C
+S1010 | Zain Ali | S1010@nu.edu.pk | Scholarship | 3.76 | 1 | BBA-1A
+S1011 | Noor Fatima | S1011@nu.edu.pk | Regular | 3.34 | 2 | BCS-2E
+S1012 | Daniyal Khan | S1012@nu.edu.pk | Regular | 2.81 | 3 | BSE-3A
+S1013 | Mahnoor Aslam | S1013@nu.edu.pk | Scholarship | 3.99 | 4 | BCS-4B
+S1014 | Hamza Sheikh | S1014@nu.edu.pk | Exchange | 0.0 | 5 | BBA-5C
+S1015 | Iqra Javed | S1015@nu.edu.pk | Regular | 2.72 | 6 | BCS-6A
+S1016 | Abdullah Tariq | S1016@nu.edu.pk | Scholarship | 3.67 | 7 | BSE-7B
+S1017 | Mehwish Ali | S1017@nu.edu.pk | Regular | 3.02 | 8 | BBA-8A
+S1018 | Talha Saeed | S1018@nu.edu.pk | Exchange | 0.0 | 1 | BCS-1C
+S1019 | Sana Javed | S1019@nu.edu.pk | Scholarship | 3.81 | 2 | BSE-2D
+S1020 | Farhan Akmal | S1020@nu.edu.pk | Regular | 2.55 | 3 | BBA-3B
