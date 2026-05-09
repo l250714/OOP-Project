@@ -35,4 +35,6 @@ void readWeightagesdata();
 void readAssessmentsdata();
 
 void readCoursesdata();
+
+void Linking();
 #endif
