@@ -1,10 +1,8 @@
 Students:
-
-ID | Name | Type | GPA | Semester| Section 
-
+ID | Name |Email| Type | GPA | Semester| SectionID
 
 Teachers:
-ID | Name | AverageFeedback
+ID | Name |Designation| Department| Email| AverageFeedback
 
 Weightages:
 CourseType | Exam% | Assignment% | Quiz%
@@ -19,4 +17,4 @@ Sections:
 SectionID | CourseID | TeacherID | VenueID | TimeSlot
 
 Assessments:
-SectionID | Type (Exam/Quiz/Assignment) | RawScore |MaxScore | MinScore
+SectionID |StudentID| CourseID| Type (Exam/Quiz/Assignment) | RawScore |MaxScore | MinScore
