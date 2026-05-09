@@ -55,39 +55,43 @@ void section_course::setTimings(string timings){
     this->timings=timings;
 }
 
-Course& section_course::getCourse(){
-    return course;
+string section_course::getCourseID() const { 
+    return courseID; 
 }
-Teacher& section_course::getTeacher(){
-    return teacher;
+string section_course::getCourseName() const { 
+    return courseName; 
 }
-Venue& section_course::getVenue(){
-    return venue;
+string section_course::getCourseTeacherID() const { 
+    return courseTeacherID; 
 }
-string section_course::getSectionID(){
-    return sectionid;
+float  section_course::getCourseExamDuration() const { 
+    return courseExamDuration; 
 }
-string section_course::getTimings(){
-    return timings;
-}
-section_course::~section_course(){}
-/* void DataBaseManager(){
-
+string section_course::getCourseType() const { 
+    return courseType; 
 }
 
-void Scheduler(){
-    
+section_course::CourseProxy section_course::getCourse() const {
+    CourseProxy p;
+    p.id = courseID;
+    p.name = courseName;
+    p.teacherID = courseTeacherID;
+    p.examDuration = courseExamDuration;
+    p.type = courseType;
+    return p;
 }
 
-void ConflictSolver(){
-
-
+Teacher& section_course::getTeacher() { 
+    return teacher; 
+}
+Venue& section_course::getVenue() { 
+    return venue; 
+}
+string   section_course::getSectionID() const { 
+    return sectionid; 
+}
+string   section_course::getTimings() const { 
+    return timings; 
 }
 
-void TeacherFeedbacks(){
-
-}
-
-void SmartRegistration(){
-
-} */
+section_course::~section_course() {}
