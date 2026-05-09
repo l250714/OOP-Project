@@ -1,7 +1,9 @@
 #include <iostream>
-#include "allheaders.h"
-#include "Venues.h"
+#include "Assessments.h"
 #include "Management.h"
+#include "Courses.h"
+#include "Venues.h"
+#include "Academic_Entities.h"
 using namespace std;
 
 
