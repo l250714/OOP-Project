@@ -1,3 +1,4 @@
+#pragma once
 #ifndef ASSESSMENTS_H
 #define ASSESSMENTS_H
 
@@ -10,6 +11,9 @@ class Assessments{
     int num;    //assessment number
     float rawscore;
     int totalMarks;
+    string sectionid;
+    string StudentID;
+    string courseID;
 public:
     Assessments();
 
@@ -22,6 +26,7 @@ public:
     int getNum();
     int getTMarks();
     string getsectionid();
+    string getCourseID();
     string getStudentID();
 
     void setWeight(float weight);
@@ -33,6 +38,7 @@ public:
     void setTMarks(int total);
     void setsectionid(string id);
     void setStudentID(string id);
+    void setCourseID(string id);
     virtual ~Assessments();
 };
 
@@ -50,7 +56,7 @@ class Assignment: public Assessments{
 public:
     Assignment();
    string getType();
-    ~Assignment();
+   ~Assignment();
 };
 
 class Exam: public Assessments{
@@ -62,12 +68,5 @@ public:
     ~Exam();
 };
 
-class Project: public Assessments{
-
-public:
-    Project();
-    string getType();
-    ~Project();
-};
 
 #endif
