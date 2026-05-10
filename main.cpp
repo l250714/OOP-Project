@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <fstream>
+#include <string>
 #include "DatabaseManager.h"
 using namespace std;
 
@@ -16,9 +18,6 @@ void S_viewProfile(Student* ptr) {
     ptr->displayProfile();
 }
 void S_viewTimetable(Student* ptr) {
-    for (int i = 0;i < sectioninfo.size();i++) {
-        cout << sectioninfo[i].getCourseName()<<endl;
-    }
     cout << "\nTimeTable";
     for (int i = 0;i < sectioninfo.size();i++) {
         if (sectioninfo[i].getSectionID() == ptr->getSection()) {
@@ -27,6 +26,255 @@ void S_viewTimetable(Student* ptr) {
     }
     
 }
+void S_viewCourses(Student* ptr) {
+    cout << "Course Code\t\t\t\tName\t\t\tType\t\t\tCredit Hours"<<endl;
+    for (int i = 0;i < sectioninfo.size();i++) {
+        if (sectioninfo[i].getSectionID() == ptr->getSection()) {
+            for (int j = 0;j < courseinfo.size();j++) {
+                if (sectioninfo[i].getCourseID() == courseinfo[j]->getID()) {
+                    cout <<j+1<<". " << courseinfo[j]->getID() << "\t\t\t" << courseinfo[j]->getName() << "\t\t\t" << courseinfo[j]->getType() << "\t\t" << courseinfo[j]->getCredits();
+                }
+            }
+        }
+    }
+}
+void S_viewMarks(Student* ptr) {
+    cout << "You are registered for the following courses:" ;
+    string choice;
+    S_viewCourses(ptr);
+    cout << endl << "Please enter a course code: ";
+    cin >> choice;
+    //find out if the course is core, elective or lab
+    string type;
+    for (int i = 0;i < courseinfo.size();i++) {
+        if (courseinfo[i]->getType() == "Core") {
+            type = "Core";
+        }
+        else if (courseinfo[i]->getType() == "Elective") {
+            type = "Elective";
+        }
+        else {
+            type = "Lab";
+        }
+    }
+    //now we need to find the course in Student and its respective marks
+    if (type == "Core") {
+        if (ptr->getNumCore() > 0) {
+            for (int i = 0;i < ptr->getNumCore();i++) {
+                if (ptr->getCore(i).getID() == choice) {
+                    if (ptr->getCore(i).getTQuizzes() > 0) {
+                        cout << "Quizzes: \n";
+                        for (int j = 0;j < ptr->getCore(i).getTQuizzes();j++) {
+                            cout << endl << j + 1 << ".\t" << ptr->getCore(i).getQuiz(j).getRawscore() << "/" << ptr->getCore(i).getQuiz(j).getTMarks() << "\tMinimum: " << ptr->getCore(i).getQuiz(j).getMax() << "\tMaximum: " << ptr->getCore(i).getQuiz(j).getMin();
+                        }
+                    }
+                    else {
+                        cout << "\nNo Quiz marks uploaded yet.";
+                    }
+                    if (ptr->getCore(i).getTExams() > 0) {
+                        cout << "Exams: \n";
+                        for (int j = 0;j < ptr->getCore(i).getTExams();j++) {
+                            cout << endl << j + 1 << ".\t" << ptr->getCore(i).getExam(j).getRawscore() << "/" << ptr->getCore(i).getExam(j).getTMarks() << "\tMinimum: " << ptr->getCore(i).getExam(j).getMax() << "\tMaximum: " << ptr->getCore(i).getExam(j).getMin();
+                        }
+                    }
+                    else {
+                        cout << "\nNo Exam marks uploaded yet.";
+                    }
+                    if (ptr->getCore(i).getTAssignments() > 0) {
+                        cout << "Exams: \n";
+                        for (int j = 0;j < ptr->getCore(i).getTAssignments();j++) {
+                            cout << endl << j + 1 << ".\t" << ptr->getCore(i).getAssignment(j).getRawscore() << "/" << ptr->getCore(i).getAssignment(j).getTMarks() << "\tMinimum: " << ptr->getCore(i).getAssignment(j).getMax() << "\tMaximum: " << ptr->getCore(i).getAssignment(j).getMin();
+                        }
+                    }
+                    else {
+                        cout << "\nNo Exam marks uploaded yet.";
+                    }
+                    
+                }
+            }
+        }
+    }
+    else if (type == "Elective") {
+        if (ptr->getNumElective() > 0) {
+            for (int i = 0;i < ptr->getNumElective();i++) {
+                if (ptr->getElective(i).getID() == choice) {
+                    if (ptr->getElective(i).getTQuizzes() > 0) {
+                        cout << "Quizzes: \n";
+                        for (int j = 0;j < ptr->getElective(i).getTQuizzes();j++) {
+                            cout << endl << j + 1 << ".\t" << ptr->getElective(i).getQuiz(j).getRawscore() << "/" << ptr->getElective(i).getQuiz(j).getTMarks() << "\tMinimum: " << ptr->getElective(i).getQuiz(j).getMax() << "\tMaximum: " << ptr->getElective(i).getQuiz(j).getMin();
+                        }
+                    }
+                    else {
+                        cout << "\nNo Quiz marks uploaded yet.";
+                    }
+                    if (ptr->getElective(i).getTAssignments() > 0) {
+                        cout << "Exams: \n";
+                        for (int j = 0;j < ptr->getElective(i).getTAssignments();j++) {
+                            cout << endl << j + 1 << ".\t" << ptr->getElective(i).getAssignment(j).getRawscore() << "/" << ptr->getElective(i).getAssignment(j).getTMarks() << "\tMinimum: " << ptr->getElective(i).getAssignment(j).getMax() << "\tMaximum: " << ptr->getElective(i).getAssignment(j).getMin();
+                        }
+                    }
+                    else {
+                        cout << "\nNo Exam marks uploaded yet.";
+                    }
+
+                }
+            }
+        }
+    }
+    else {
+        if (ptr->getNumLab() > 0) {
+            for (int i = 0;i < ptr->getNumLab();i++) {
+                if (ptr->getLab(i).getID() == choice) {
+                    if (ptr->getLab(i).getTQuizzes() > 0) {
+                        cout << "Quizzes: \n";
+                        for (int j = 0;j < ptr->getLab(i).getTQuizzes();j++) {
+                            cout << endl << j + 1 << ".\t" << ptr->getLab(i).getQuiz(j).getRawscore() << "/" << ptr->getLab(i).getQuiz(j).getTMarks() << "\tMinimum: " << ptr->getLab(i).getQuiz(j).getMax() << "\tMaximum: " << ptr->getLab(i).getQuiz(j).getMin();
+                        }
+                    }
+                    else {
+                        cout << "\nNo Quiz marks uploaded yet.";
+                    }
+                    if (ptr->getLab(i).getTAssignments() > 0) {
+                        cout << "Exams: \n";
+                        for (int j = 0;j < ptr->getLab(i).getTAssignments();j++) {
+                            cout << endl << j + 1 << ".\t" << ptr->getLab(i).getAssignment(j).getRawscore() << "/" << ptr->getElective(i).getAssignment(j).getTMarks() << "\tMinimum: " << ptr->getElective(i).getAssignment(j).getMax() << "\tMaximum: " << ptr->getElective(i).getAssignment(j).getMin();
+                        }
+                    }
+                    else {
+                        cout << "\nNo Exam marks uploaded yet.";
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+//feedback would work once all the data is linked
+void CoreFeedback(Student* ptr) {
+    ofstream feedback("C:\\Users\\hp\\source\\repos\\Projectver2\\Projectver2\\StudentFeedback.txt");
+    int numq = 0;
+    float score;
+    int Tscore = 0;
+    for (int i = 0;i < ptr->getNumCore();i++) {
+        cout << "Course: " << ptr->getCore(i).getName();
+        cout << "\nHow would you rate the teaching style on a scale of 0-5?";   //doing 2 questions for now
+        while (true) {
+            cin >> score;
+            if (score > 0 && score < 6) {
+                numq++;
+                Tscore += score;
+                break;
+            }
+            else {
+                cout << "\nError: Out of range 0-5. Try Again: ";
+            }
+        }
+        cout << "\nHow well did you understand the course contents on a scale of 0-5?";
+        while (true) {
+            cin >> score;
+            if (score > 0 && score < 6) {
+                numq++;
+                Tscore += score;
+                break;
+            }
+            else {
+                cout << "\nError: Out of range 0-5. Try Again: ";
+            }
+
+        }
+        string line = "";
+        line += (ptr->getCore(i).get_teacherid() + "|" + to_string(Tscore / numq));
+        //feedback << line;
+    }
+
+    feedback.close();
+}
+void ElectiveFeedback(Student* ptr) {
+    ofstream feedback("C:\\Users\\hp\\source\\repos\\Projectver2\\Projectver2\\StudentFeedback.txt");
+    int numq = 0;
+    float score;
+    int Tscore = 0;
+    for (int i = 0;i < ptr->getNumElective();i++) {
+        cout << "Course: " << ptr->getElective(i).getName();
+        cout << "\nHow would you rate the teaching style on a scale of 0-5?";   //doing 2 questions for now
+        while (true) {
+            cin >> score;
+            if (score > 0 && score < 6) {
+                numq++;
+                Tscore += score;
+                break;
+            }
+            else {
+                cout << "\nError: Out of range 0-5. Try Again: ";
+            }
+        }
+        cout << "\nHow well did you understand the course contents on a scale of 0-5?";
+        while (true) {
+            cin >> score;
+            if (score > 0 && score < 6) {
+                numq++;
+                Tscore += score;
+                break;
+            }
+            else {
+                cout << "\nError: Out of range 0-5. Try Again: ";
+            }
+
+        }
+        string line = "";
+        line += (ptr->getElective(i).get_teacherid() + "|" + to_string(Tscore / numq));
+        feedback << line;
+    }
+
+    feedback.close();
+}
+void LabFeedback(Student* ptr) {
+    ofstream feedback("C:\\Users\\hp\\source\\repos\\Projectver2\\Projectver2\\StudentFeedback.txt");
+    int numq = 0;
+    float score;
+    int Tscore = 0;
+    for (int i = 0;i < ptr->getNumLab();i++) {
+        cout << "Course: " << ptr->getLab(i).getName();
+        cout << "\nHow would you rate the teaching style on a scale of 0-5?";   //doing 2 questions for now
+        while (true) {
+            cin >> score;
+            if (score > 0 && score < 6) {
+                numq++;
+                Tscore += score;
+                break;
+            }
+            else {
+                cout << "\nError: Out of range 0-5. Try Again: ";
+            }
+        }
+        cout << "\nHow well did you understand the course contents on a scale of 0-5?";
+        while (true) {
+            cin >> score;
+            if (score > 0 && score < 6) {
+                numq++;
+                Tscore += score;
+                break;
+            }
+            else {
+                cout << "\nError: Out of range 0-5. Try Again: ";
+            }
+
+        }
+        string line = "";
+        line += (ptr->getLab(i).get_teacherid() + "|" + to_string(Tscore / numq));
+        feedback << line;
+    }
+
+    feedback.close();
+}
+void S_feedback(Student* ptr) {
+    //must send feedback to all teachers in one go
+    CoreFeedback(ptr);
+    ElectiveFeedback(ptr);
+    LabFeedback(ptr);
+}
+
 void StudentProfile(Student* ptr) {
     int choice;
     while (true) {
@@ -45,17 +293,17 @@ void StudentProfile(Student* ptr) {
         switch (choice) {
         case 1:
             S_viewProfile(ptr);
-       case 2:
+        case 2:
             S_viewTimetable(ptr);
-        /* case 3:
-            S_viewCourses();
+        case 3:
+            S_viewCourses(ptr);
         case 4:
-            S_viewMarks();
+            S_viewMarks(ptr);
         case 5:
-            S_feedback();
+            S_feedback(ptr);
         case 6: 
-            S_viewTranscript();
-        case 7:
+           ptr->viewTranscript();
+        /*case 7:
             S_registration();
         case 8:
             S_examSchedule();*/
@@ -93,10 +341,10 @@ void TeacherProfile(Teacher& obj) {
 
 int main(){
     readStudentdata();
-    readSectionsdata();
     readCoursesdata();
     readTeachersdata();
     readVenuesdata();
+    readSectionsdata();
     readWeightagesdata();
     readAssessmentsdata();
     Linking();
