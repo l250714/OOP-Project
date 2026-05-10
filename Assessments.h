@@ -1,71 +1,124 @@
 #pragma once
-#ifndef ASSESSMENTS_H
-#define ASSESSMENTS_H
+#ifndef COURSES_H
+#define COURSES_H
 
 #include <iostream>
-using namespace std; 
+#include <string.h>
+#include <vector>
+#include "Assessments.h"
+using namespace std;
 
-class Assessments{
-    float weightage;        
-    float max,min,avg;
-    int num;    //assessment number
-    float rawscore;
-    int totalMarks;
-    string sectionid;
-    string StudentID;
-    string courseID;
+class Student;
+//think about schedule and timings and venue
+class Course {   //base class
+protected:      //makes data members accessible in child classes
+    string ID;
+    string name;
+    int TQuizzes, TExams, TAssignments;     //total of each assessment type (in class)
+    float exam_duration;
+    int credithr;
+    float batch_average;    //out of 100 (in class)
+    string teacherID;
+    vector <Student*> students;
 public:
-    Assessments();
+    Course();
+    void set_ID(string id);
+    void set_teacherID(string id);
+    void setname(string name);
+    void setExamduration(float time);
+    void setStudent(Student& obj);
+    string getID();
+    string getName();
+    float getExamDuration();
+    string get_teacherid();
+    Student& getStudent(int i);
+    virtual int getTQuizzes()=0;
+    virtual int getTExams()=0;
+    virtual int getTAssignments()=0;
+    virtual int getCredits()=0;
+    virtual string getType() = 0;
+    //vector<Student*> getallStudents();
+    virtual ~Course();
 
-    virtual string getType()=0;
-    float getWeight();
-    float getMax();
-    float getMin();
-    float getAvg();
-    float getRawscore();
-    int getNum();
-    int getTMarks();
-    string getsectionid();
-    string getCourseID();
-    string getStudentID();
-
-    void setWeight(float weight);
-    void setMax(float max);
-    void setMin(float min);
-    void setAvg(float avg);
-    void setRawscore(float rawScore);
-    void setNum(int num);
-    void setTMarks(int total);
-    void setsectionid(string id);
-    void setStudentID(string id);
-    void setCourseID(string id);
-    virtual ~Assessments();
 };
 
-class Quiz: public Assessments{
-    
-public:
-    Quiz();
-   string getType();
-    ~Quiz();
-   
-};
+//----Types of Courses-----
 
-class Assignment: public Assessments{
+class Core : public Course {
+    vector<Quiz> quizzes;
+    vector<Exam> exams;
+    vector <Assignment> assignments;
+    float points;
+    string grade;
 
 public:
-    Assignment();
-   string getType();
-   ~Assignment();
-};
+    Core();
+    void setpoints(float points);
+    void setgrade(string grade);
+    void setQuiz(Quiz& obj);
+    void setExam(Exam& obj);
+    void setAssignment(Assignment& obj);
 
-class Exam: public Assessments{
-    int num_questions;
-    float* marks_perQ;
-public:
-    Exam();
+    float getpoints();
+    string getgrade();
+    Exam& getExam(int i);
+    Quiz& getQuiz(int i);
     string getType();
-    ~Exam();
+    Assignment& getAssignment(int i);
+    int getCredits();
+    int getTQuizzes();
+    int getTExams();
+    int getTAssignments();
+    ~Core();
+
+};
+
+class Elective : public Course {
+    vector <Assignment> assignments;
+    vector<Quiz> quizzes;
+    float points;
+    string grade;
+public:
+    Elective();
+    void setpoints(float points);
+    void setQuiz(Quiz& obj);
+    void setgrade(string grade);
+    void setAssignment(Assignment& obj);
+    //void setProject();
+
+    float getpoints();
+    string getgrade();
+    Quiz& getQuiz(int i);
+    string getType();
+    Assignment& getAssignment(int i);
+    int getCredits();
+    int getTQuizzes();
+    int getTExams();
+    int getTAssignments();
+    ~Elective();
+};
+
+class Lab : public Course {
+    vector<Quiz> quizzes;
+    vector <Assignment> Lab_tasks;
+    float points;
+    string grade;
+public:
+    Lab();
+    void setpoints(float points);
+    void setgrade(string grade);
+    void setQuiz(Quiz& obj);
+    void setAssignment(Assignment& obj);
+    Quiz& getQuiz(int i);
+    float getpoints();
+    string getgrade();
+    string getType();
+    int getCredits();
+    int getTQuizzes();
+    int getTExams();
+    Assignment& getAssignment(int i);
+    int getTAssignments();
+    ~Lab();
 };
 
 
