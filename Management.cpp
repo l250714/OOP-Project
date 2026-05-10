@@ -7,10 +7,12 @@
 using namespace std;
 
 
-section_course::section_course(){
-    course.set_ID("none");
-    course.set_teacherID("none");
-    course.setname("none");
+section_course::section_course() {
+    courseID = "none";
+    courseName = "none";
+    courseTeacherID = "none";
+    courseExamDuration = 0.0f;
+    courseType = "none";
 
     teacher.setdepartment("none");
     teacher.setdesignation("none");
@@ -25,16 +27,19 @@ section_course::section_course(){
     venue.setComputer(0);
     venue.setID("none");
 
-    sectionid="none";
-    timings="none";
+    sectionid = "none";
+    timings = "none";
 }
-void section_course::setCourse(Course& obj){
-    course.set_ID(obj.getID());
-    course.set_teacherID(obj.get_teacherid());
-    course.setExamduration(obj.getExamDuration());
-    course.setname(obj.getName());
+
+void section_course::setCourse(Course& obj) {
+    courseID = obj.getID();
+    courseName = obj.getName();
+    courseTeacherID = obj.get_teacherid();
+    courseExamDuration = obj.getExamDuration();
+    courseType = obj.getType();   // works on concrete Core/Elective/Lab
 }
-void section_course::setTeacher(Teacher& obj){
+
+void section_course::setTeacher(Teacher& obj) {
     teacher.setavgFeedback(obj.getavgFeedback());
     teacher.setdepartment(obj.getDept());
     teacher.setdesignation(obj.getDesignation());
@@ -45,18 +50,19 @@ void section_course::setTeacher(Teacher& obj){
     teacher.setNumElective(obj.getNumElective());
     teacher.setNumLab(obj.getNumLab());
 }
-void section_course::setVenue(Venue& obj){
+
+void section_course::setVenue(Venue& obj) {
     venue.setCapacity(obj.getCapacity());
     venue.setComputer(obj.getComputers());
     venue.setID(obj.getID());
 }
-void section_course::setsectionID(string id){
-    sectionid=id;
-}
-void section_course::setTimings(string timings){
-    this->timings=timings;
-}
 
+void section_course::setsectionID(string id) { 
+    sectionid = id; 
+}
+void section_course::setTimings(string t) { 
+    timings = t; 
+}
 string section_course::getCourseID() const { 
     return courseID; 
 }
