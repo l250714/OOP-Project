@@ -7,7 +7,6 @@ using namespace std;
 Assessments::Assessments(){
     weightage=0;
     max=0, min=0, avg=0, num=0, rawscore=0, totalMarks=0;
-    StudentID = "none";
 }
 float Assessments::getWeight(){
     return weightage;
@@ -30,14 +29,19 @@ int Assessments::getNum(){
 int Assessments::getTMarks(){
     return totalMarks;
 }
-
 string Assessments::getsectionid(){
     return sectionid;
 }
 string Assessments::getStudentID() {
     return StudentID;
 }
+string Assessments::getCourseID() {
+    return courseID;
+}
 
+void Assessments::setStudentID(string id) {
+    StudentID = id;
+}
 void Assessments::setWeight(float weight){
     weightage=weight;
 }
@@ -59,15 +63,13 @@ void Assessments::setNum(int num){
 void Assessments::setTMarks(int total){
     totalMarks=total;
 }
-
 void Assessments::setsectionid(string id){
     sectionid=id;
 }
-void Assessments::setStudentID(string id) {
-    StudentID = id;
+void Assessments::setCourseID(string id) {
+    courseID = id;
 }
 Assessments::~Assessments(){}
-
 
 //Quiz class
 Quiz::Quiz(){
@@ -97,3 +99,7 @@ string Project:: getType(){
     return "Project";
 }
 Project::~Project(){}
+
+
+
+
