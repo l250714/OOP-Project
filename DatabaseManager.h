@@ -2,7 +2,9 @@
 #define DATABASEMANAGER_H
 
 
-#include "allheaders.h"
+#include "Academic_Entities.h"
+#include "Courses.h"
+#include "Management.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -25,6 +27,8 @@ extern W weightstore[3];   //0: core; 1: elective; 2: lab
 void readStudentdata();
 
 void readSectionsdata();
+
+float readTeacherFeedback(string t_id);
 
 void readTeachersdata();
 
