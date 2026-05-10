@@ -1,3 +1,4 @@
+#pragma once
 #ifndef ACADEMIC_ENTITIES_H
 #define ACADEMIC_ENTITIES_H
 
@@ -6,22 +7,23 @@ using namespace std;
 #include "Courses.h"
 
 
-class AcademicEntity{       
-    string name,email,ID;
+class AcademicEntity {
+protected:
+    string name, email, ID;
     int num_core, num_lab, num_elective;
-    Core *core; Elective *elective; Lab *labs;
+    vector <Core> core; vector <Elective> elective;  vector <Lab> labs;
 public:
-    virtual void displayProfile()=0;
     AcademicEntity();
+    virtual void displayProfile() = 0;
     string getName();
     string getEmail();
     string getID();
     int getNumCore();
     int getNumElective();
     int getNumLab();
-    Core* getCore(int i);
-    Elective* getElective(int i);
-    Lab* getLab(int i);
+    Core& getCore(int i);
+    Elective& getElective(int i);
+    Lab& getLab(int i);
 
     void setName(string name);
     void setEmail(string email);
@@ -33,66 +35,71 @@ public:
     void setElective(Elective& obj);
     void setLab(Lab& obj);
     virtual ~AcademicEntity();
+
 };
 
-class Student: public AcademicEntity{      
+class Student : public AcademicEntity {
     int semester;
+    string section;
 public:
     Student();
-    void viewTranscript();
-    int getSemester();
-    void displayProfile();
-    /* void addCourse(char* course);*/
-    //void updateCourse(char );   
+    virtual void viewTranscript()=0;
+    virtual int getSemester();
+    virtual void displayProfile()=0;
     string getSection();
     void setSection(string section);
-    void setSemester(int sem);
-    virtual string getType()=0;
+    /* void addCourse(char* course);*/    
+    virtual void setSemester(int sem);
+    virtual string getType() = 0;
     virtual float GPAcalculation() = 0;
     virtual ~Student();
 };
-class Regular_Student: public Student{
+
+class Regular_Student : public Student {
     float gpa;  //CGPA
-    float sgpa;
 
 public:
     Regular_Student();
-    Regular_Student(string id,string name, string email, int semester,float gpa);
+    Regular_Student(string id, string name, string email, int semester, float gpa,string section);
     void displayProfile();
     float GPAcalculation();
     string getType();
     void setgpa(float gpa);
     ~Regular_Student();
+    void viewTranscript();
 };
 
-class Scholarship_Student: public Regular_Student{
+class Scholarship_Student : public Regular_Student {
     string status_flag;
 public:
     Scholarship_Student();
-    Scholarship_Student(string id, string name, string email, int semester, float gpa);
+    Scholarship_Student(string id, string name, string email, int semester, float gpa, string section);
     void displayProfile();
     string getType();
     string getStatus();
     void setStatus(string status);
-    float GPAcalculation();  
+    float GPAcalculation();
     ~Scholarship_Student();
+    void viewTranscript();
 };
 
-class Exchange_Student: public Student{
+class Exchange_Student : public Student {
 public:
     Exchange_Student();
-    Exchange_Student(string id,string name, string email, int semester);
+    Exchange_Student(string id, string name, string email, int semester, string section);
     string getType();
     void displayProfile();
     bool grading();     //either pass or fail
-    float GPAcalculation() override {return -1;}    //since we do not need to calculate the gpa of an exchange student
+    float GPAcalculation() override { return -1; }    //since we do not need to calculate the gpa of an exchange student
     ~Exchange_Student();
+    void viewTranscript();
 };
 
 
-class Teacher: public AcademicEntity{
+class Teacher : public AcademicEntity {
     string department;
-    char*designation;
+    string designation;
+    float avgFeedback;
 public:
     Teacher();
     void setdepartment(string dept);
@@ -105,6 +112,5 @@ public:
     ~Teacher();
 
 };
-
 
 #endif
