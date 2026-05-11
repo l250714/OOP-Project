@@ -98,6 +98,9 @@ void Course::setExamduration(float time) {
         exam_duration = time;
     }
 }
+void Course::setSemester(int i) {
+    semester = i;
+}
 void Course::setStudent(Student& obj) {
     Student* s;
     if (obj.getType() == "Regular") {
@@ -145,6 +148,9 @@ float Course::getExamDuration() {
 }
 string Course::get_teacherid() {
     return teacherID;
+}
+int Course::getSemester() {
+    return semester;
 }
 Course::~Course() {
     for (int i = 0; i < students.size(); i++) {
