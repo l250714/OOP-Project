@@ -3,11 +3,11 @@
 #define ASSESSMENTS_H
 
 #include <iostream>
-using namespace std; 
+using namespace std;
 
-class Assessments{
-    float weightage;        
-    float max,min,avg;
+class Assessments {
+    float weightage;
+    float max, min, avg;
     int num;    //assessment number
     float rawscore;
     int totalMarks;
@@ -17,7 +17,7 @@ class Assessments{
 public:
     Assessments();
 
-    virtual string getType()=0;
+    virtual string getType() = 0;
     float getWeight();
     float getMax();
     float getMin();
@@ -28,7 +28,6 @@ public:
     string getsectionid();
     string getCourseID();
     string getStudentID();
-
     void setWeight(float weight);
     void setMax(float max);
     void setMin(float min);
@@ -38,28 +37,29 @@ public:
     void setTMarks(int total);
     void setsectionid(string id);
     void setStudentID(string id);
-    void setCourseID(string id);
+
     virtual ~Assessments();
+    void setCourseID(std::string id);
 };
 
-class Quiz: public Assessments{
-    
+class Quiz : public Assessments {
+
 public:
     Quiz();
-   string getType();
+    string getType();
     ~Quiz();
-   
+
 };
 
-class Assignment: public Assessments{
+class Assignment : public Assessments {
 
 public:
     Assignment();
-   string getType();
-   ~Assignment();
+    string getType();
+    ~Assignment();
 };
 
-class Exam: public Assessments{
+class Exam : public Assessments {
     int num_questions;
     float* marks_perQ;
 public:
