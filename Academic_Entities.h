@@ -31,9 +31,9 @@ public:
     void setNumCore(int num);
     void setNumElective(int num);
     void setNumLab(int num);
-    void setCore(Core& obj);
-    void setElective(Elective& obj);
-    void setLab(Lab& obj);
+    void setCore(Core* ptr);
+    void setElective(Elective* ptr);
+    void setLab(Lab* ptr);
     virtual ~AcademicEntity();
 
 };
