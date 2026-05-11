@@ -16,7 +16,7 @@ protected:      //makes data members accessible in child classes
     string name;
     int TQuizzes, TExams, TAssignments;     //total of each assessment type (in class)
     float exam_duration;
-    int credithr;
+    int credithr, semester;
     float batch_average;    //out of 100 (in class)
     string teacherID;
     vector <Student*> students;
@@ -27,6 +27,7 @@ public:
     void setname(string name);
     void setExamduration(float time);
     void setStudent(Student& obj);
+    void setSemester(int i);
     string getID();
     string getName();
     float getExamDuration();
@@ -37,6 +38,7 @@ public:
     virtual int getTAssignments()=0;
     virtual int getCredits()=0;
     virtual string getType() = 0;
+    int getSemester();
     //vector<Student*> getallStudents();
     virtual ~Course();
 
