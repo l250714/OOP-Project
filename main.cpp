@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include "DatabaseManager.h"
+#include "Management.h"
 using namespace std;
 
 
@@ -274,6 +275,37 @@ void S_feedback(Student* ptr) {
     ElectiveFeedback(ptr);
     LabFeedback(ptr);
 }
+void S_registration(Student* ptr) {     //assuming registration only happens at the beginning of the semester & all sections have the same courses
+    if (ptr->getNumCore() == 0 && ptr->getNumElective() == 0 && ptr->getNumLab() == 0) {    //no registered courses atm
+        cout << "\nCode " << "\tName\tcredits\tType";
+        string choice;
+        for (int i = 0;i < courseinfo.size();i++) {
+            if (ptr->getSemester() == courseinfo[i]->getSemester()) {
+                cout <<endl<< courseinfo[i]->getID() << " " << courseinfo[i]->getName() << " " << courseinfo[i]->getCredits()<<" "<<courseinfo[i]->getType();
+                cout << "\nWould you like to register for this? (Yes/No) ";
+                cin >> choice;
+                if (choice == "Yes") {
+                    if (courseinfo[i]->getType() == "Core") {
+                        ptr->setCore(dynamic_cast<Core*>(courseinfo[i]));
+                    }
+                    else if (courseinfo[i]->getType() == "Elective") {
+                        ptr->setElective(dynamic_cast<Elective*>(courseinfo[i]));
+                    }
+                    else {
+                        ptr->setLab(dynamic_cast<Lab*>(courseinfo[i]));
+                    }
+                }
+                else {
+                    continue;
+                }
+            }
+        }
+    }
+}
+//exam schedule needs help
+void S_examSchedule(Student* ptr) {
+    Scheduler(ptr->getSection());
+}
 
 void StudentProfile(Student* ptr) {
     int choice;
@@ -303,10 +335,10 @@ void StudentProfile(Student* ptr) {
             S_feedback(ptr);
         case 6: 
            ptr->viewTranscript();
-        /*case 7:
-            S_registration();
+        case 7:
+            S_registration(ptr);
         case 8:
-            S_examSchedule();*/
+            S_examSchedule(ptr);
         case 9:
             cout << "\nGoodbye! :)";
             return;
