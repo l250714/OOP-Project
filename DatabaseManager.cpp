@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <string>
 #include "Assessments.h"
 #include "DatabaseManager.h"
 #include "Academic_Entities.h"
@@ -9,33 +10,34 @@
 #include "Courses.h"
 
 //TO DO: link all the courses to each student
+//think: what happens when no courses have been registered?
 
 using namespace std;
 
-vector <Student*> studentinfo;  
-vector <Teacher> teacherinfo;       
-vector <section_course> sectioninfo;    
-vector <Course*> courseinfo;   
-vector <Venue> venueinfo;      
-vector <Assessments*> assesssmentinfo; 
+vector <Student*> studentinfo;
+vector <Teacher> teacherinfo;
+vector <section_course> sectioninfo;
+vector <Course*> courseinfo; //(batch average not included, and not needed )
+vector <Venue> venueinfo;
+vector <Assessments*> assesssmentinfo;  //weightage, average, num, total marks
 W weightstore[3];
 
-string trim(const string& line){
-    int start=0, end=line.length()-1;
-    while(start<=end && (isspace(line[start]) || line[start]=='\r')){
+string trim(const string& line) {
+    int start = 0, end = line.length() - 1;
+    while (start <= end && (isspace(line[start]) || line[start] == '\r')) {
         start++;
     }
-    while(end>=start && (isspace(line[end])   || line[end]=='\r')){
+    while (end >= start && (isspace(line[end]) || line[end] == '\r')) {
         end--;
     }
-    if(start>end) return "";
-    return line.substr(start, end-start+1);
+    if (start > end) return "";
+    return line.substr(start, end - start + 1);
 }
 
-void readStudentdata(){
-    Student *s;
+void readStudentdata() {
+    Student* s;
     ifstream students("C:\\Users\\hp\\OneDrive\\Desktop\\Uni study\\Sem 2\\OOP\\Project ver 2\\text files\\Students.txt");
-    string id,name,email,type, gpa,section,semester,line;
+    string id, name, email, type, gpa, section, semester, line;
     if (!students.is_open()) {
         cout << "\nError opening file!" << endl;
         return;
@@ -50,31 +52,31 @@ void readStudentdata(){
         getline(ss, gpa, '|');
         getline(ss, semester, '|');
         getline(ss, section, '|');
-        id=trim(id); name=trim(name); type=trim(type);
-        gpa=trim(gpa); semester=trim(semester); section = trim(section);
+        id = trim(id); name = trim(name); type = trim(type);
+        gpa = trim(gpa); semester = trim(semester); section = trim(section);
         //cout << semester;
-        if(type=="Regular"){
-            s=new Regular_Student(id,name,email,stoi(semester),stof(gpa),section);
+        if (type == "Regular") {
+            s = new Regular_Student(id, name, email, stoi(semester), stof(gpa), section);
         }
-        else if(type=="Exchange"){
-            s=new Exchange_Student(id,name,email,stoi(semester),section);
+        else if (type == "Exchange") {
+            s = new Exchange_Student(id, name, email, stoi(semester), section);
         }
-        else if(type=="Scholarship"){
-            s=new Scholarship_Student(id,name,email,stoi(semester),stof(gpa),section);
+        else if (type == "Scholarship") {
+            s = new Scholarship_Student(id, name, email, stoi(semester), stof(gpa), section);
         }
         else {
             s = nullptr;
         }
         studentinfo.push_back(s);
         //cout << endl << studentinfo[0]->getID();
-   }
+    }
     students.close();
 }
 
 void readCoursesdata() {
     Course* c;
     ifstream course("C:\\Users\\hp\\OneDrive\\Desktop\\Uni study\\Sem 2\\OOP\\Project ver 2\\text files\\Courses.txt");
-    string id, name, teacherid, c_type, line1;
+    string id, name, semester, teacherid, c_type, line1;
     if (!course.is_open()) {
         cout << "\nError opening file!" << endl;
         return;
@@ -86,7 +88,8 @@ void readCoursesdata() {
         getline(ss, name, '|');
         getline(ss, teacherid, '|');
         getline(ss, c_type, '|');
-        id = trim(id); name = trim(name); c_type = trim(c_type); teacherid = trim(teacherid);
+        getline(ss, semester, '|');
+        id = trim(id); name = trim(name); c_type = trim(c_type); teacherid = trim(teacherid); semester = trim(semester);
         if (c_type == "Core") {
             c = new Core;
         }
@@ -102,16 +105,18 @@ void readCoursesdata() {
         c->set_ID(id);
         c->set_teacherID(teacherid);
         c->setname(name);
+        c->setSemester(stoi(semester));
         courseinfo.push_back(c);
     }
     course.close();
 }
 
+//feedback not being recorded
 float readTeacherFeedback(string t_id) {
-    float avg=0;
-    int count=1;
+    float avg = 0;
+    int count = 1;
     ifstream feedback("C:\\Users\\hp\\source\\repos\\Projectver2\\Projectver2\\StudentFeedback.txt");
-    string id, FB,line;
+    string id, FB, line;
     if (!feedback.is_open()) {
         cout << "\nError opening file!" << endl;
         return -1.1;
@@ -134,10 +139,10 @@ float readTeacherFeedback(string t_id) {
     return avg;
 }
 
-void readTeachersdata(){
+void readTeachersdata() {
     Teacher t;
     ifstream teachers("C:\\Users\\hp\\OneDrive\\Desktop\\Uni study\\Sem 2\\OOP\\Project ver 2\\text files\\Teachers.txt");
-    string id,name,line,designation, department, email;
+    string id, name, line, designation, department, email;
     if (!teachers.is_open()) {
         cout << "\nError opening file!" << endl;
         return;
@@ -155,7 +160,7 @@ void readTeachersdata(){
 
         id = trim(id); name = trim(name);
         designation = trim(designation); department = trim(department);
-        email = trim(email); 
+        email = trim(email);
         t.setID(id);
         t.setName(name);
         t.setdesignation(designation);
@@ -167,10 +172,10 @@ void readTeachersdata(){
     teachers.close();
 }
 
-void readVenuesdata(){
+void readVenuesdata() {
     Venue v;
     ifstream venues("C:\\Users\\hp\\OneDrive\\Desktop\\Uni study\\Sem 2\\OOP\\Project ver 2\\text files\\Venues.txt");
-    string id,capacity,hasComp,line;
+    string id, capacity, hasComp, line;
     if (!venues.is_open()) {
         cout << "\nError opening file!" << endl;
         return;
@@ -181,19 +186,19 @@ void readVenuesdata(){
         getline(ss, id, '|');
         getline(ss, capacity, '|');
         getline(ss, hasComp, '|');
-        id=trim(id); capacity=trim(capacity); hasComp=trim(hasComp);
+        id = trim(id); capacity = trim(capacity); hasComp = trim(hasComp);
         v.setID(id);
         v.setCapacity(stoi(capacity));
         v.setComputer(stoi(hasComp));
         venueinfo.push_back(v);
-   }
+    }
     venues.close();
 }
 
-void readSectionsdata(){
+void readSectionsdata() {
     section_course s;
     ifstream sections("C:\\Users\\hp\\OneDrive\\Desktop\\Uni study\\Sem 2\\OOP\\Project ver 2\\text files\\Sections.txt");
-    string sectionid,courseid,teacherid,venueid, timing,line;
+    string sectionid, courseid, teacherid, venueid, timing, line;
     if (!sections.is_open()) {
         cout << "\nError opening file!" << endl;
         return;
@@ -206,25 +211,25 @@ void readSectionsdata(){
         getline(ss, teacherid, '|');
         getline(ss, venueid, '|');
         getline(ss, timing, '|');
-        sectionid=trim(sectionid); courseid=trim(courseid); teacherid=trim(teacherid);
-        venueid=trim(venueid); timing=trim(timing);
+        sectionid = trim(sectionid); courseid = trim(courseid); teacherid = trim(teacherid);
+        venueid = trim(venueid); timing = trim(timing);
         //find courses      can use .at()
-        for(int i=0;i<courseinfo.size();i++){
-            if(courseinfo[i]->getID()==courseid){
-                s.setCourse(*courseinfo[i]);
+        for (int i = 0;i < courseinfo.size();i++) {
+            if (courseinfo[i]->getID() == courseid) {
+                s.setCourse(courseinfo[i]);
                 break;
             }
         }
         //find teacher
-        for(int i=0;i<teacherinfo.size();i++){
-            if(teacherinfo[i].getID()==teacherid){
+        for (int i = 0;i < teacherinfo.size();i++) {
+            if (teacherinfo[i].getID() == teacherid) {
                 s.setTeacher(teacherinfo[i]);
                 break;
             }
         }
         //find venue
-        for(int i=0;i<venueinfo.size();i++){
-            if(venueinfo[i].getID()==venueid){
+        for (int i = 0;i < venueinfo.size();i++) {
+            if (venueinfo[i].getID() == venueid) {
                 s.setVenue(venueinfo[i]);
                 break;
             }
@@ -232,13 +237,13 @@ void readSectionsdata(){
         s.setsectionID(sectionid);
         s.setTimings(timing);
         sectioninfo.push_back(s);
-   }
+    }
     sections.close();
 }
 
-void readWeightagesdata(){
+void readWeightagesdata() {
     ifstream weights("C:\\Users\\hp\\source\\repos\\Projectver2\\Projectver2\\Weightages.txt");
-    string w_type,exam,assignment,quiz,line2;
+    string w_type, exam, assignment, quiz, line2;
     int index;
     if (!weights.is_open()) {
         cout << "\nError opening file!" << endl;
@@ -251,33 +256,33 @@ void readWeightagesdata(){
         getline(ss, exam, '|');
         getline(ss, assignment, '|');
         getline(ss, quiz, '|');
-        w_type=trim(w_type); exam=trim(exam); assignment=trim(assignment); quiz=trim(quiz);
-        if(w_type=="Core"){
+        w_type = trim(w_type); exam = trim(exam); assignment = trim(assignment); quiz = trim(quiz);
+        if (w_type == "Core") {
             index = 0;
         }
-        else if(w_type=="Elective"){
+        else if (w_type == "Elective") {
             index = 1;
         }
-        else if(w_type=="Lab"){
+        else if (w_type == "Lab") {
             index = 2;
         }
         weightstore[index].assignment = stof(assignment);
         weightstore[index].exam = stof(exam);
         weightstore[index].quiz = stof(quiz);
-   }
+    }
     weights.close();
-} 
+}
 
-void readAssessmentsdata(){
+void readAssessmentsdata() {
     //SectionID | StudentID| Type (Exam/Quiz/Assignment) | RawScore |MaxScore | MinScore
-    Assessments* a=nullptr;
-    ifstream assess("C:\\Users\\hp\\OneDrive\\Desktop\\Uni study\\Sem 2\\OOP\\Project\\Assessments.txt");
-    string id,stdID,courseID,type,rawscore,maxscore,minscore,line;
+    Assessments* a = nullptr;
+    ifstream assess("C:\\Users\\hp\\OneDrive\\Desktop\\Uni study\\Sem 2\\OOP\\Project ver 2\\text files\\Assessments.txt");
+    string id, stdID, courseID, type, rawscore, maxscore, minscore, line;
     if (!assess.is_open()) {
         cout << "\nError opening file!" << endl;
         return;
     }
-    while (getline(assess, line)) {     
+    while (getline(assess, line)) {
         istringstream ss(line);
         if (line.empty()) continue;
 
@@ -307,30 +312,27 @@ void readAssessmentsdata(){
         else if (type == "Quiz") {
             a = new Quiz;
         }
-        else if (type == "Project") {
-            a = new Project;
-        }
         else {
-            a = nullptr; 
+            a = nullptr;
             return;
         }
         if (a && ss) {      //making sure data is valid
             a->setsectionid(id);
             a->setStudentID(stdID);
-            //a->setCourseID(courseID);
+            a->setCourseID(courseID); 
             a->setRawscore(stof(rawscore));
             a->setMax(stof(maxscore));
             a->setMin(stof(minscore));
             assesssmentinfo.push_back(a);
             //cout << "\nSize: " << assesssmentinfo.size();
         }
-    }       
+    }
     assess.close();
 }
 
 //LINKING ALL DATA TOGETHER:
 
-void Linking(){
+void Linking() {
     for (int i = 0; i < teacherinfo.size(); i++) {
         //first we need to count how many labs, elective and core courses there are
         int coreCount = 0, elecCount = 0, labCount = 0;
@@ -359,29 +361,29 @@ void Linking(){
                 if (ctype == "Core") {
                     Core* c = dynamic_cast<Core*>(courseinfo[k]);   //dyanmic casting to be sure the data will get stored properly
                     if (c) {    //had to make sure something went in the pointer
-                        teacherinfo[i].setCore(*c);
+                        teacherinfo[i].setCore(c);
                     }
                 }
                 else if (ctype == "Elective") {
                     Elective* e = dynamic_cast<Elective*>(courseinfo[k]);
                     if (e) {
-                        teacherinfo[i].setElective(*e);
+                        teacherinfo[i].setElective(e);
                     }
                 }
                 else if (ctype == "Lab") {
                     Lab* l = dynamic_cast<Lab*>(courseinfo[k]);
                     if (l) {
-                        teacherinfo[i].setLab(*l);
+                        teacherinfo[i].setLab(l);
                     }
                 }
             }
         }
     }
-    
+
     for (int i = 0; i < studentinfo.size(); i++) {
         for (int j = 0; j < sectioninfo.size(); j++) {
             if (studentinfo[i]->getSection() == sectioninfo[j].getSectionID()) {
-                string cid = sectioninfo[j].getCourse().getID();
+                string cid = sectioninfo[j].getCourseID();
                 for (int k = 0; k < courseinfo.size(); k++) {
                     if (courseinfo[k]->getID() == cid) {
                         courseinfo[k]->setStudent(*studentinfo[i]);
@@ -397,7 +399,7 @@ void Linking(){
                 sectioninfo[i].setTeacher(teacherinfo[j]);
                 break;
             }
-       }
+        }
         for (int j = 0;j < venueinfo.size();j++) {
             if (venueinfo[j].getID() == sectioninfo[i].getVenue().getID()) {
                 sectioninfo[i].setVenue(venueinfo[j]);
@@ -406,12 +408,31 @@ void Linking(){
         }
         for (int j = 0;j < courseinfo.size();j++) {
             if (courseinfo[j]->getID() == sectioninfo[i].getCourseID()) {
-                sectioninfo[i].setCourse(*courseinfo[j]);
+                sectioninfo[i].setCourse(courseinfo[j]);
                 break;
             }
         }
     }
-    //TO DO: link all the courses to each student
-
+    //TO DO: link all the courses to each student 
+    // Assumption: all students of a section are registered for the same courses
+    //in sectionsinfo, we have sectionID and CourseID
+    for (int i = 0;i < studentinfo.size();i++) {    //for all students
+        for (int j = 0;j < sectioninfo.size();j++) {
+            if (sectioninfo[j].getSectionID() == studentinfo[i]->getSection()) {    //if section ID matches
+                //finding the core course using course ID
+                for (int k = 0;k < courseinfo.size();k++) {
+                    if (sectioninfo[j].getCourseID() == courseinfo[k]->getID() && courseinfo[k]->getType() == "Core") {
+                        studentinfo[i]->setCore(dynamic_cast<Core*>(courseinfo[k]));
+                    }
+                    else if (sectioninfo[j].getCourseID() == courseinfo[k]->getID() && courseinfo[k]->getType() == "Elective") {
+                        studentinfo[i]->setElective(dynamic_cast<Elective*>(courseinfo[k]));
+                    }
+                    else if (sectioninfo[j].getCourseID() == courseinfo[k]->getID() && courseinfo[k]->getType() == "Lab") {
+                        studentinfo[i]->setLab(dynamic_cast<Lab*>(courseinfo[k]));
+                    }
+                }
+            }
+        }
+    }
 }
 
