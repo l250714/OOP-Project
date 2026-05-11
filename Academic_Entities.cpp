@@ -116,25 +116,28 @@ void AcademicEntity:: setNumElective(int num){
 void AcademicEntity:: setNumLab(int num){
     num_lab = num;
 }
-void AcademicEntity::setCore(Core& obj) {
+void AcademicEntity::setCore(Core* ptr) {
     Core* c = new Core;
-    c->set_ID(obj.getID());
-    c->setname(obj.getName());
-    c->set_teacherID(obj.get_teacherid());
+    c->set_ID(ptr->getID());
+    c->setname(ptr->getName());
+    c->set_teacherID(ptr->get_teacherid());
+    num_core++;
     core.push_back(*c);
 }
-void AcademicEntity::setElective(Elective& obj) {
+void AcademicEntity::setElective(Elective* ptr) {
     Elective* e = new Elective;
-    e->set_ID(obj.getID());
-    e->setname(obj.getName());
-    e->set_teacherID(obj.get_teacherid());
+    e->set_ID(ptr->getID());
+    e->setname(ptr->getName());
+    e->set_teacherID(ptr->get_teacherid());
+    num_elective++;
     elective.push_back(*e);
 }
-void AcademicEntity::setLab(Lab& obj) {
+void AcademicEntity::setLab(Lab* ptr) {
     Lab* l = new Lab;
-    l->set_ID(obj.getID());
-    l->setname(obj.getName());
-    l->set_teacherID(obj.get_teacherid());
+    l->set_ID(ptr->getID());
+    l->setname(ptr->getName());
+    l->set_teacherID(ptr->get_teacherid());
+    num_lab++;
     labs.push_back(*l);
 }
 AcademicEntity::~AcademicEntity(){
