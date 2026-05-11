@@ -20,7 +20,7 @@ class section_course {
 
 public:
     section_course();
-    void setCourse(Course& obj);
+    void setCourse(Course* ptr);
     void setTeacher(Teacher& obj);
     void setVenue(Venue& obj);
     void setsectionID(string id);
@@ -38,7 +38,7 @@ public:
     // It returns a struct-of-strings wrapper; callers that need the real Course*
     // should look it up in courseinfo by getCourseID().
     // To avoid breaking your existing code we provide a small inner proxy class:
-    struct CourseProxy {
+    /*struct CourseProxy {
         string id, name, teacherID, type;
         float  examDuration;
         string getID()           const { return id; }
@@ -47,7 +47,8 @@ public:
         float  getExamDuration() const { return examDuration; }
         string getType()         const { return type; }
     };
-    CourseProxy getCourse() const;
+    CourseProxy getCourse() const;*/
+    Course*getCourse(string id) const;
 
     Teacher& getTeacher();
     Venue& getVenue();
@@ -56,8 +57,14 @@ public:
     ~section_course();
 };
 
+struct booking {
+    Venue* v;
+    bool status;
+    int date;
+};
+extern vector <booking> examschedule;
 
-void Scheduler();
+void Scheduler(string section);
 void ConflictSolver();
 void TeacherFeedbacks();
 void SmartRegistration();
