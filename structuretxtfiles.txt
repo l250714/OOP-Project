@@ -2,13 +2,13 @@ Students:
 ID | Name |Email| Type | GPA | Semester| SectionID
 
 Teachers:
-ID | Name |Designation| Department| Email| AverageFeedback
+ID | Name |Designation| Department| Email
 
 Weightages:
 CourseType | Exam% | Assignment% | Quiz%
 
 Courses:
-CourseID | Title | TeacherID | Type
+CourseID | Title | TeacherID | Type| semester
 
 Venues:
 RoomID | Capacity | HasComputers(1/0)
@@ -18,3 +18,6 @@ SectionID | CourseID | TeacherID | VenueID | TimeSlot
 
 Assessments:
 SectionID |StudentID| CourseID| Type (Exam/Quiz/Assignment) | RawScore |MaxScore | MinScore
+
+StudentFeedback:
+TeacherID| average
