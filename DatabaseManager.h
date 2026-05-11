@@ -16,6 +16,7 @@ extern vector <Teacher> teacherinfo;
 extern vector <section_course> sectioninfo;
 extern vector <Course*> courseinfo;
 extern vector <Venue> venueinfo;
+extern vector <Assessments*> assesssmentinfo;
 struct W{
     float exam;
     float assignment;
@@ -41,4 +42,5 @@ void readAssessmentsdata();
 void readCoursesdata();
 
 void Linking();
+
 #endif
