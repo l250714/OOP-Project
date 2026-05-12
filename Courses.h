@@ -32,6 +32,7 @@ public:
     string getName();
     float getExamDuration();
     string get_teacherid();
+    vector <Student*>& getStudent();
     Student& getStudent(int i);
     virtual int getTQuizzes()=0;
     virtual int getTExams()=0;
@@ -57,9 +58,9 @@ public:
     Core();
     void setpoints(float points);
     void setgrade(string grade);
-    void setQuiz(Quiz& obj);
-    void setExam(Exam& obj);
-    void setAssignment(Assignment& obj);
+    void setQuiz(Quiz* obj);
+    void setExam(Exam* obj);
+    void setAssignment(Assignment* obj);
 
     float getpoints();
     string getgrade();
@@ -83,9 +84,9 @@ class Elective : public Course {
 public:
     Elective();
     void setpoints(float points);
-    void setQuiz(Quiz& obj);
+    void setQuiz(Quiz* obj);
     void setgrade(string grade);
-    void setAssignment(Assignment& obj);
+    void setAssignment(Assignment* obj);
     //void setProject();
 
     float getpoints();
@@ -95,8 +96,8 @@ public:
     Assignment& getAssignment(int i);
     int getCredits();
     int getTQuizzes();
-    int getTExams();
     int getTAssignments();
+    int getTExams()override { return -1; }
     ~Elective();
 };
 
@@ -109,15 +110,15 @@ public:
     Lab();
     void setpoints(float points);
     void setgrade(string grade);
-    void setQuiz(Quiz& obj);
-    void setAssignment(Assignment& obj);
+    void setQuiz(Quiz* obj);
+    void setAssignment(Assignment* obj);
     Quiz& getQuiz(int i);
     float getpoints();
     string getgrade();
     string getType();
     int getCredits();
     int getTQuizzes();
-    int getTExams();
+    int getTExams()override { return -1; }
     Assignment& getAssignment(int i);
     int getTAssignments();
     ~Lab();
