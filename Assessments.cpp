@@ -79,6 +79,7 @@ Assessments::~Assessments(){}
 
 //Quiz class
 Quiz::Quiz(){
+
 }
 string Quiz:: getType(){
     return "Quiz";
@@ -94,8 +95,7 @@ Assignment::~Assignment(){}
 
 //Exam class
 Exam::Exam(){
-    num_questions = 0;
-    marks_perQ = nullptr;
+
 }
 string Exam:: getType(){
     return "Exam";
