@@ -6,6 +6,9 @@
 using namespace std;
 #include "Courses.h"
 
+float getPointsCore(Course* ptr, Student* s);
+float getPointsElective(Course* ptr, Student* s);
+float getPointsLab(Course* ptr, Student* s);
 
 class AcademicEntity {
 protected:
@@ -47,8 +50,7 @@ public:
     virtual int getSemester();
     virtual void displayProfile()=0;
     string getSection();
-    void setSection(string section);
-    /* void addCourse(char* course);*/    
+    void setSection(string section);   
     virtual void setSemester(int sem);
     virtual string getType() = 0;
     virtual float GPAcalculation() = 0;
