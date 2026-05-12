@@ -17,7 +17,13 @@ Sections:
 SectionID | CourseID | TeacherID | VenueID | TimeSlot
 
 Assessments:
-SectionID |StudentID| CourseID| Type (Exam/Quiz/Assignment) | RawScore |MaxScore | MinScore
+SectionID |StudentID| CourseID| Type (Exam/Quiz/Assignment) | RawScore |MaxScore | MinScore |Total
 
 StudentFeedback:
 TeacherID| average
+
+Results:
+studentID| CourseID| points
+
+ExamSchedule:
+section| courseID| roomID| date| time
