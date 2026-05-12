@@ -60,8 +60,8 @@ public:
 };
 
 class Exam : public Assessments {
-    int num_questions;
-    float* marks_perQ;
+    /*int num_questions;
+    float* marks_perQ;*/
 public:
     Exam();
     string getType();
