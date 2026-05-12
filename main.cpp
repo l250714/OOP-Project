@@ -2,19 +2,41 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <iomanip>
 #include "DatabaseManager.h"
 #include "Management.h"
 using namespace std;
 
 
+template <typename T>
+int getValid(const string& prompt, T lo, T hi) { //we can use float or integer
+    int val;
+    while (true) {
+        cout << prompt;
+        cin >> val;
+        if (!cin.fail() && (val >= lo && val <= hi)) {
+            return val;
+        }
+        cin.clear();
+        cin.ignore(10000, '\n');
+        cout << "Invalid input. Please enter a number between " << lo << " and " << hi << ".\n";
+    }
+}
+string getValidString(const string& prompt) {
+    string val;
+    while (true) {
+        cout << prompt;
+        if (cin >> val && !val.empty()) {
+            return val;
+        }
+        cin.clear();
+        cin.ignore(10000, '\n');
+        cout << "\nInvalid input. Please enter a non-empty value.\n";
+    }
+}
+
 void S_viewProfile(Student* ptr) {                                                                  
-    cout << endl;
-    cout << "_____ _             _            _     _____            __ _ _" << endl;
-    cout << "/ ____| |           | |          | |   |  __ \\          / _(_) |" << endl;
-    cout << "| (___ | |_ _   _  __| | ___ _ __ | |_  | |__) | __ ___ | |_ _| | ___" << endl;
-    cout << "\\___ \\| __| | | |/ _` |/ _ \\ '_ \\| __| |  ___/ '__/ _ \\|  _| | |/ _ \\"<< endl;
-    cout << "____) | |_| |_| | (_| |  __/ | | | |_  | |   | | | (_) | | | | |  __/" << endl;
-    cout << "|_____/ \\__|\\__,_|\\__,_|\\___|_| |_|\\__| |_|   |_|  \\___/|_| |_|_|\\___|" << endl;
+    cout << "\nSTUDENT PROFILE";
     //Name, ID, Semester,Section, Email, gpa, number of courses
     ptr->displayProfile();
 }
@@ -28,12 +50,12 @@ void S_viewTimetable(Student* ptr) {
     
 }
 void S_viewCourses(Student* ptr) {
-    cout << "Course Code\t\t\t\tName\t\t\tType\t\t\tCredit Hours"<<endl;
+    cout << "Course Code\t\Name\t\Type\tCredit Hours"<<endl;
     for (int i = 0;i < sectioninfo.size();i++) {
         if (sectioninfo[i].getSectionID() == ptr->getSection()) {
             for (int j = 0;j < courseinfo.size();j++) {
                 if (sectioninfo[i].getCourseID() == courseinfo[j]->getID()) {
-                    cout <<j+1<<". " << courseinfo[j]->getID() << "\t\t\t" << courseinfo[j]->getName() << "\t\t\t" << courseinfo[j]->getType() << "\t\t" << courseinfo[j]->getCredits();
+                    cout <<j+1<<". " << courseinfo[j]->getID() << "\t" << courseinfo[j]->getName() << " " << courseinfo[j]->getType() << "\t" << courseinfo[j]->getCredits();
                 }
             }
         }
@@ -43,19 +65,12 @@ void S_viewMarks(Student* ptr) {
     cout << "You are registered for the following courses:" ;
     string choice;
     S_viewCourses(ptr);
-    cout << endl << "Please enter a course code: ";
-    cin >> choice;
+    choice=getValidString("Please enter a course code: ");
     //find out if the course is core, elective or lab
     string type;
     for (int i = 0;i < courseinfo.size();i++) {
-        if (courseinfo[i]->getType() == "Core") {
-            type = "Core";
-        }
-        else if (courseinfo[i]->getType() == "Elective") {
-            type = "Elective";
-        }
-        else {
-            type = "Lab";
+        if (courseinfo[i]->getID() == choice) {
+            type = courseinfo[i]->getType();
         }
     }
     //now we need to find the course in Student and its respective marks
@@ -66,7 +81,7 @@ void S_viewMarks(Student* ptr) {
                     if (ptr->getCore(i).getTQuizzes() > 0) {
                         cout << "Quizzes: \n";
                         for (int j = 0;j < ptr->getCore(i).getTQuizzes();j++) {
-                            cout << endl << j + 1 << ".\t" << ptr->getCore(i).getQuiz(j).getRawscore() << "/" << ptr->getCore(i).getQuiz(j).getTMarks() << "\tMinimum: " << ptr->getCore(i).getQuiz(j).getMax() << "\tMaximum: " << ptr->getCore(i).getQuiz(j).getMin();
+                            cout << endl << j + 1 << ".\t" << ptr->getCore(i).getQuiz(j).getRawscore() << "/" << ptr->getCore(i).getQuiz(j).getTMarks() << "\tMinimum: " << ptr->getCore(i).getQuiz(j).getMin() << "\tMaximum: " << ptr->getCore(i).getQuiz(j).getMax();
                         }
                     }
                     else {
@@ -75,7 +90,7 @@ void S_viewMarks(Student* ptr) {
                     if (ptr->getCore(i).getTExams() > 0) {
                         cout << "Exams: \n";
                         for (int j = 0;j < ptr->getCore(i).getTExams();j++) {
-                            cout << endl << j + 1 << ".\t" << ptr->getCore(i).getExam(j).getRawscore() << "/" << ptr->getCore(i).getExam(j).getTMarks() << "\tMinimum: " << ptr->getCore(i).getExam(j).getMax() << "\tMaximum: " << ptr->getCore(i).getExam(j).getMin();
+                            cout << endl << j + 1 << ".\t" << ptr->getCore(i).getExam(j).getRawscore() << "/" << ptr->getCore(i).getExam(j).getTMarks() << "\tMinimum: " << ptr->getCore(i).getExam(j).getMin() << "\tMaximum: " << ptr->getCore(i).getExam(j).getMax();
                         }
                     }
                     else {
@@ -84,7 +99,7 @@ void S_viewMarks(Student* ptr) {
                     if (ptr->getCore(i).getTAssignments() > 0) {
                         cout << "Exams: \n";
                         for (int j = 0;j < ptr->getCore(i).getTAssignments();j++) {
-                            cout << endl << j + 1 << ".\t" << ptr->getCore(i).getAssignment(j).getRawscore() << "/" << ptr->getCore(i).getAssignment(j).getTMarks() << "\tMinimum: " << ptr->getCore(i).getAssignment(j).getMax() << "\tMaximum: " << ptr->getCore(i).getAssignment(j).getMin();
+                            cout << endl << j + 1 << ".\t" << ptr->getCore(i).getAssignment(j).getRawscore() << "/" << ptr->getCore(i).getAssignment(j).getTMarks() << "\tMinimum: " << ptr->getCore(i).getAssignment(j).getMin() << "\tMaximum: " << ptr->getCore(i).getAssignment(j).getMax();
                         }
                     }
                     else {
@@ -102,7 +117,7 @@ void S_viewMarks(Student* ptr) {
                     if (ptr->getElective(i).getTQuizzes() > 0) {
                         cout << "Quizzes: \n";
                         for (int j = 0;j < ptr->getElective(i).getTQuizzes();j++) {
-                            cout << endl << j + 1 << ".\t" << ptr->getElective(i).getQuiz(j).getRawscore() << "/" << ptr->getElective(i).getQuiz(j).getTMarks() << "\tMinimum: " << ptr->getElective(i).getQuiz(j).getMax() << "\tMaximum: " << ptr->getElective(i).getQuiz(j).getMin();
+                            cout << endl << j + 1 << ".\t" << ptr->getElective(i).getQuiz(j).getRawscore() << "/" << ptr->getElective(i).getQuiz(j).getTMarks() << "\tMinimum: " << ptr->getElective(i).getQuiz(j).getMin() << "\tMaximum: " << ptr->getElective(i).getQuiz(j).getMax();
                         }
                     }
                     else {
@@ -111,7 +126,7 @@ void S_viewMarks(Student* ptr) {
                     if (ptr->getElective(i).getTAssignments() > 0) {
                         cout << "Exams: \n";
                         for (int j = 0;j < ptr->getElective(i).getTAssignments();j++) {
-                            cout << endl << j + 1 << ".\t" << ptr->getElective(i).getAssignment(j).getRawscore() << "/" << ptr->getElective(i).getAssignment(j).getTMarks() << "\tMinimum: " << ptr->getElective(i).getAssignment(j).getMax() << "\tMaximum: " << ptr->getElective(i).getAssignment(j).getMin();
+                            cout << endl << i + 1 << ".\t" << ptr->getElective(i).getAssignment(j).getRawscore() << "/" << ptr->getElective(i).getAssignment(j).getTMarks() << "\tMinimum: " << ptr->getElective(i).getAssignment(j).getMin() << "\tMaximum: " << ptr->getElective(i).getAssignment(j).getMax();
                         }
                     }
                     else {
@@ -129,7 +144,7 @@ void S_viewMarks(Student* ptr) {
                     if (ptr->getLab(i).getTQuizzes() > 0) {
                         cout << "Quizzes: \n";
                         for (int j = 0;j < ptr->getLab(i).getTQuizzes();j++) {
-                            cout << endl << j + 1 << ".\t" << ptr->getLab(i).getQuiz(j).getRawscore() << "/" << ptr->getLab(i).getQuiz(j).getTMarks() << "\tMinimum: " << ptr->getLab(i).getQuiz(j).getMax() << "\tMaximum: " << ptr->getLab(i).getQuiz(j).getMin();
+                            cout << endl << i + 1 << ".\t" << ptr->getLab(i).getQuiz(j).getRawscore() << "/" << ptr->getLab(i).getQuiz(j).getTMarks() << "\tMinimum: " << ptr->getLab(i).getQuiz(j).getMin() << "\tMaximum: " << ptr->getLab(i).getQuiz(j).getMax();
                         }
                     }
                     else {
@@ -138,7 +153,7 @@ void S_viewMarks(Student* ptr) {
                     if (ptr->getLab(i).getTAssignments() > 0) {
                         cout << "Exams: \n";
                         for (int j = 0;j < ptr->getLab(i).getTAssignments();j++) {
-                            cout << endl << j + 1 << ".\t" << ptr->getLab(i).getAssignment(j).getRawscore() << "/" << ptr->getElective(i).getAssignment(j).getTMarks() << "\tMinimum: " << ptr->getElective(i).getAssignment(j).getMax() << "\tMaximum: " << ptr->getElective(i).getAssignment(j).getMin();
+                            cout << endl << j + 1 << ".\t" << ptr->getLab(i).getAssignment(j).getRawscore() << "/" << ptr->getLab(i).getAssignment(j).getTMarks() << "\tMinimum: " << ptr->getLab(i).getAssignment(j).getMin() << "\tMaximum: " << ptr->getLab(i).getAssignment(j).getMax();
                         }
                     }
                     else {
@@ -150,161 +165,43 @@ void S_viewMarks(Student* ptr) {
         }
     }
 }
-
-//feedback would work once all the data is linked
-void CoreFeedback(Student* ptr) {
-    ofstream feedback("C:\\Users\\hp\\source\\repos\\Projectver2\\Projectver2\\StudentFeedback.txt");
-    int numq = 0;
-    float score;
-    int Tscore = 0;
-    for (int i = 0;i < ptr->getNumCore();i++) {
-        cout << "Course: " << ptr->getCore(i).getName();
-        cout << "\nHow would you rate the teaching style on a scale of 0-5?";   //doing 2 questions for now
-        while (true) {
-            cin >> score;
-            if (score > 0 && score < 6) {
-                numq++;
-                Tscore += score;
-                break;
-            }
-            else {
-                cout << "\nError: Out of range 0-5. Try Again: ";
-            }
-        }
-        cout << "\nHow well did you understand the course contents on a scale of 0-5?";
-        while (true) {
-            cin >> score;
-            if (score > 0 && score < 6) {
-                numq++;
-                Tscore += score;
-                break;
-            }
-            else {
-                cout << "\nError: Out of range 0-5. Try Again: ";
-            }
-
-        }
-        string line = "";
-        line += (ptr->getCore(i).get_teacherid() + "|" + to_string(Tscore / numq));
-        //feedback << line;
-    }
-
-    feedback.close();
-}
-void ElectiveFeedback(Student* ptr) {
-    ofstream feedback("C:\\Users\\hp\\source\\repos\\Projectver2\\Projectver2\\StudentFeedback.txt");
-    int numq = 0;
-    float score;
-    int Tscore = 0;
-    for (int i = 0;i < ptr->getNumElective();i++) {
-        cout << "Course: " << ptr->getElective(i).getName();
-        cout << "\nHow would you rate the teaching style on a scale of 0-5?";   //doing 2 questions for now
-        while (true) {
-            cin >> score;
-            if (score > 0 && score < 6) {
-                numq++;
-                Tscore += score;
-                break;
-            }
-            else {
-                cout << "\nError: Out of range 0-5. Try Again: ";
-            }
-        }
-        cout << "\nHow well did you understand the course contents on a scale of 0-5?";
-        while (true) {
-            cin >> score;
-            if (score > 0 && score < 6) {
-                numq++;
-                Tscore += score;
-                break;
-            }
-            else {
-                cout << "\nError: Out of range 0-5. Try Again: ";
-            }
-
-        }
-        string line = "";
-        line += (ptr->getElective(i).get_teacherid() + "|" + to_string(Tscore / numq));
-        feedback << line;
-    }
-
-    feedback.close();
-}
-void LabFeedback(Student* ptr) {
-    ofstream feedback("C:\\Users\\hp\\source\\repos\\Projectver2\\Projectver2\\StudentFeedback.txt");
-    int numq = 0;
-    float score;
-    int Tscore = 0;
-    for (int i = 0;i < ptr->getNumLab();i++) {
-        cout << "Course: " << ptr->getLab(i).getName();
-        cout << "\nHow would you rate the teaching style on a scale of 0-5?";   //doing 2 questions for now
-        while (true) {
-            cin >> score;
-            if (score > 0 && score < 6) {
-                numq++;
-                Tscore += score;
-                break;
-            }
-            else {
-                cout << "\nError: Out of range 0-5. Try Again: ";
-            }
-        }
-        cout << "\nHow well did you understand the course contents on a scale of 0-5?";
-        while (true) {
-            cin >> score;
-            if (score > 0 && score < 6) {
-                numq++;
-                Tscore += score;
-                break;
-            }
-            else {
-                cout << "\nError: Out of range 0-5. Try Again: ";
-            }
-
-        }
-        string line = "";
-        line += (ptr->getLab(i).get_teacherid() + "|" + to_string(Tscore / numq));
-        feedback << line;
-    }
-
-    feedback.close();
-}
 void S_feedback(Student* ptr) {
     //must send feedback to all teachers in one go
     CoreFeedback(ptr);
     ElectiveFeedback(ptr);
     LabFeedback(ptr);
 }
-void S_registration(Student* ptr) {     //assuming registration only happens at the beginning of the semester & all sections have the same courses
-    if (ptr->getNumCore() == 0 && ptr->getNumElective() == 0 && ptr->getNumLab() == 0) {    //no registered courses atm
-        cout << "\nCode " << "\tName\tcredits\tType";
-        string choice;
-        for (int i = 0;i < courseinfo.size();i++) {
-            if (ptr->getSemester() == courseinfo[i]->getSemester()) {
-                cout <<endl<< courseinfo[i]->getID() << " " << courseinfo[i]->getName() << " " << courseinfo[i]->getCredits()<<" "<<courseinfo[i]->getType();
-                cout << "\nWould you like to register for this? (Yes/No) ";
-                cin >> choice;
-                if (choice == "Yes") {
-                    if (courseinfo[i]->getType() == "Core") {
-                        ptr->setCore(dynamic_cast<Core*>(courseinfo[i]));
-                    }
-                    else if (courseinfo[i]->getType() == "Elective") {
-                        ptr->setElective(dynamic_cast<Elective*>(courseinfo[i]));
-                    }
-                    else {
-                        ptr->setLab(dynamic_cast<Lab*>(courseinfo[i]));
-                    }
-                }
-                else {
-                    continue;
-                }
-            }
+void S_registration(Student* ptr) {     
+    availableCourses(ptr->getSemester());
+    string choice;
+    choice=getValidString("\nEnter the course code you wish to register in: ");
+    SmartResgitartion(ptr, choice);
+}
+void S_examSchedule(Student* ptr) {
+    cout << "\n------ My Exams ------\n";
+    cout << "\n====================================================================\n";
+    cout << left
+        << setw(15) << "Course"
+        << setw(15) << "Section"
+        << setw(15) << "Venue"
+        << setw(10) << "Date"
+        << setw(15) << "Time" << endl;
+
+    cout << "====================================================================\n";
+    for (int i = 0; i < finalschedule.size(); i++) {
+
+        if (finalschedule[i].sectionID ==
+            ptr->getSection()) {
+
+            cout << left
+                << setw(15) << finalschedule[i].courseID
+                << setw(15) << finalschedule[i].sectionID
+                << setw(15) << finalschedule[i].venueID
+                << setw(10) << finalschedule[i].date
+                << setw(15) << finalschedule[i].time
+                << endl;
         }
     }
-}
-//exam schedule needs help
-void S_examSchedule(Student* ptr) {
-    Scheduler(ptr->getSection());
 }
 
 void StudentProfile(Student* ptr) {
@@ -319,55 +216,342 @@ void StudentProfile(Student* ptr) {
         cout << "888  Y8P  888 .d888888 888 888  888      888  Y8P  888 88888888 888  888 888  888" << endl;
         cout << "888   \"   888 888  888 888 888  888      888   \"   888 Y8b.     888  888 Y88b 888" << endl;
         cout << "888       888 \"Y888888 888 888  888      888       888  \"Y8888  888  888  \"Y88888" << endl;
-                                                                                                    
-        cout << "\nPlease choose your action: 1. View Profile\n2. View Timetable\n3. View Courses\n4. View Marks\n5. Teacher Feedbacks\n6. View Transcript\n7. Registration\n8. Exam Schedule\n9. Close System\nYour choice: ";
-        cin >> choice;
+        choice=getValid("\nPlease choose your action: \n1. View Profile\n2. View Timetable\n3. View Courses\n4. View Marks\n5. Teacher Feedbacks\n6. View Transcript\n7. Registration\n8. Exam Schedule\n9. Close System\nYour choice: ", 1, 9);
         switch (choice) {
         case 1:
             S_viewProfile(ptr);
+            break;
         case 2:
             S_viewTimetable(ptr);
+            break;
         case 3:
             S_viewCourses(ptr);
+            break;
         case 4:
             S_viewMarks(ptr);
+            break;
         case 5:
             S_feedback(ptr);
+            break;
         case 6: 
-           ptr->viewTranscript();
+           ptr->viewTranscript();   //not working :(
+           break;
         case 7:
             S_registration(ptr);
+            break;
         case 8:
             S_examSchedule(ptr);
+            break;
         case 9:
+            closing();
             cout << "\nGoodbye! :)";
             return;
         }
     }
 }
 
+
+void T_viewFeedback(Teacher& obj) {
+    cout << "\nYour Average Feedback for this Semester is: " << obj.getavgFeedback() << "/5.0";
+}
+
+
+void T_viewClasses(Teacher& obj) {      //core and electives have the same credit hours????
+    //here we can give the option to add scores etc
+    cout << endl << "-----Core Courses-----";
+    for (int i = 0;i < obj.getNumCore();i++) {
+        cout << endl<<i + 1<<endl;
+        cout << "\nCode: " << obj.getCore(i).getID() << "\nName: " << obj.getCore(i).getName() << "\nCedit hours: " << obj.getCore(i).getCredits()<<"\nSection(s): ";
+        //we can get the section by searching through sectionsinfo
+        for (int j = 0;j < sectioninfo.size();j++) {
+            if (obj.getID() == sectioninfo[j].getCourseTeacherID()) {
+                cout << sectioninfo[j].getSectionID() << "\t";
+            }
+        }
+    }
+    cout << endl << "-----Elective Courses-----";
+    for (int i = 0;i < obj.getNumElective();i++) {
+        cout << i + 1 << endl;
+        cout << "\nCode: " << obj.getElective(i).getID() << "\nName: " << obj.getElective(i).getName() << "\nCedit hours: " << obj.getElective(i).getCredits() << "\nSection(s): ";
+        //we can get the section by searching through sectionsinfo
+        for (int j = 0;j < sectioninfo.size();j++) {
+            if (obj.getID() == sectioninfo[j].getCourseTeacherID()) {
+                cout << sectioninfo[j].getSectionID() << "\t";
+            }
+        }
+    }
+    cout << endl << "-----Lab Courses-----";
+    for (int i = 0;i < obj.getNumLab();i++) {
+        cout << i + 1 << endl;
+        cout << "\nCode: " << obj.getLab(i).getID() << "\nName: " << obj.getLab(i).getName() << "\nCedit hours: " << obj.getLab(i).getCredits() << "\nSection(s): ";
+        //we can get the section by searching through sectionsinfo
+        for (int j = 0;j < sectioninfo.size();j++) {
+            if (obj.getID() == sectioninfo[j].getCourseTeacherID()) {
+                cout << sectioninfo[j].getSectionID() << "\t";
+            }
+        }
+    }
+}
+void T_setMarks(Teacher& obj) {
+    T_viewClasses(obj);
+    string c_id, sec, type;
+    c_id=getValidString("\nEnter the Course ID: ");
+    //find the course and respective sections:
+    cout << "\nSection: ";
+    cin >> sec;
+    //validate
+    int option;
+    double Tmarks, min,max, marks;
+    option=getValid("\n1. Add Quiz\n2. Add Exam\n3. Add Asignment\nEnter the choice: ", 1, 3);
+    //find out the type of course
+    for (int i = 0;i < courseinfo.size();i++) {
+        if (courseinfo[i]->getID() == c_id) {
+            type = courseinfo[i]->getType();
+        }
+    }
+    Tmarks = getValid("\nTotal Marks: ", 1, 150);
+    max = getValid("\nMaximum Marks: ", 0.0, Tmarks);
+    min = getValid("\nMinimum Marks: ", 0.0, Tmarks);
+    switch (option) {
+    case 1:
+        if (type == "Core") {
+            for (int i = 0;i < studentinfo.size();i++) {
+                if (studentinfo[i]->getNumCore() != 0) {
+                    for (int j = 0; j < studentinfo[i]->getNumCore(); j++) {
+                        if (studentinfo[i]->getCore(j).getID() == c_id && studentinfo[i]->getSection() == sec) {
+                            Quiz obj;
+                            cout << "\nStudent ID: " << studentinfo[i]->getID();
+                            obj.setTMarks(Tmarks);
+                            obj.setCourseID(c_id);
+                            obj.setMax(max);
+                            obj.setMin(min);
+                            marks = getValid("\nObtained Marks: ", min, max);
+                            /*cout << "\nObtained Marks: ";
+                            cin >> marks;*/
+                            obj.setRawscore(marks);
+                            obj.setsectionid(studentinfo[i]->getSection());
+                            obj.setStudentID(studentinfo[i]->getID());
+                            //obj.setWeight(); we dont need this
+                            studentinfo[i]->getCore(j).setQuiz(&obj);
+
+                        }
+                    }
+                }
+
+            }
+        }
+        else if (type == "Elective") {
+            for (int i = 0;i < studentinfo.size();i++) {
+                if (studentinfo[i]->getNumElective() != 0) {
+                    for (int j = 0; j < studentinfo[i]->getNumElective(); j++) {
+                        if (studentinfo[i]->getElective(j).getID() == c_id && studentinfo[i]->getSection() == sec) {
+                            Quiz obj;
+                            cout << "\nStudent ID: " << studentinfo[i]->getID();
+                            obj.setTMarks(Tmarks);
+                            obj.setCourseID(c_id);
+                            obj.setMax(max);
+                            obj.setMin(min);
+                            marks = getValid("\nObtained Marks: ", min, max);
+                            /*cout << "\nObtained Marks: ";
+                            cin >> marks;*/
+                            obj.setRawscore(marks);
+                            obj.setsectionid(studentinfo[i]->getSection());
+                            obj.setStudentID(studentinfo[i]->getID());
+                            //obj.setWeight(); we dont need this
+                            studentinfo[i]->getElective(j).setQuiz(&obj);
+
+                        }
+                    }
+                }
+
+            }
+        }
+        else {
+            for (int i = 0;i < studentinfo.size();i++) {
+                if (studentinfo[i]->getNumLab() != 0) {
+                    for (int j = 0; j < studentinfo[i]->getNumLab(); j++) {
+                        if (studentinfo[i]->getLab(j).getID() == c_id && studentinfo[i]->getSection() == sec) {
+                            Quiz obj;
+                            cout << "\nStudent ID: " << studentinfo[i]->getID();
+                            obj.setTMarks(Tmarks);
+                            obj.setCourseID(c_id);
+                            obj.setMax(max);
+                            obj.setMin(min);
+                            marks = getValid("\nObtained Marks: ", min, max);
+                            /*cout << "\nObtained Marks: ";
+                            cin >> marks;*/
+                            obj.setRawscore(marks);
+                            obj.setsectionid(studentinfo[i]->getSection());
+                            obj.setStudentID(studentinfo[i]->getID());
+                            //obj.setWeight(); we dont need this
+                            studentinfo[i]->getLab(j).setQuiz(&obj);
+
+                        }
+                    }
+                }
+
+            }
+        }
+        break;
+    case 2:
+        if (type == "Core") {
+            for (int i = 0;i < studentinfo.size();i++) {
+                if (studentinfo[i]->getNumCore() != 0) {
+                    for (int j = 0; j < studentinfo[i]->getNumCore(); j++) {
+                        if (studentinfo[i]->getCore(j).getID() == c_id && studentinfo[i]->getSection() == sec) {
+                            Exam obj;
+                            cout << "\nStudent ID: " << studentinfo[i]->getID();
+                            obj.setTMarks(Tmarks);
+                            obj.setCourseID(c_id);
+                            obj.setMax(max);
+                            obj.setMin(min);
+                            marks = getValid("\nObtained Marks: ", min, max);
+                            /*cout << "\nObtained Marks: ";
+                            cin >> marks;*/
+                            obj.setRawscore(marks);
+                            obj.setsectionid(studentinfo[i]->getSection());
+                            obj.setStudentID(studentinfo[i]->getID());
+                            //obj.setWeight(); we dont need this
+                            studentinfo[i]->getCore(j).setExam(&obj);
+
+                        }
+                    }
+                }
+
+            }
+        }
+        else if (type == "Elective") {
+            cout << "\nNo exams for elective courses.";
+        }
+        else {
+            cout << "\nNo exams for Labs.";
+        }
+        break;
+    case 3:
+        if (type == "Core") {
+            for (int i = 0;i < studentinfo.size();i++) {
+                if (studentinfo[i]->getNumCore() != 0) {
+                    for (int j = 0; j < studentinfo[i]->getNumCore(); j++) {
+                        if (studentinfo[i]->getCore(j).getID() == c_id && studentinfo[i]->getSection() == sec) {
+                            Assignment obj;
+                            cout << "\nStudent ID: " << studentinfo[i]->getID();
+                            obj.setTMarks(Tmarks);
+                            obj.setCourseID(c_id);
+                            obj.setMax(max);
+                            obj.setMin(min);
+                            marks = getValid("\nObtained Marks: ", min, max);
+                            /*cout << "\nObtained Marks: ";
+                            cin >> marks;*/
+                            obj.setRawscore(marks);
+                            obj.setsectionid(studentinfo[i]->getSection());
+                            obj.setStudentID(studentinfo[i]->getID());
+                            //obj.setWeight(); we dont need this
+                            studentinfo[i]->getCore(j).setAssignment(&obj);
+
+                        }
+                    }
+                }
+
+            }
+        }
+        else if (type == "Elective") {
+            for (int i = 0;i < studentinfo.size();i++) {
+                if (studentinfo[i]->getNumElective() != 0) {
+                    for (int j = 0; j < studentinfo[i]->getNumElective(); j++) {
+                        if (studentinfo[i]->getElective(j).getID() == c_id && studentinfo[i]->getSection() == sec) {
+                            Assignment obj;
+                            cout << "\nStudent ID: " << studentinfo[i]->getID();
+                            obj.setTMarks(Tmarks);
+                            obj.setCourseID(c_id);
+                            obj.setMax(max);
+                            obj.setMin(min);
+                            marks = getValid("\nObtained Marks: ", min, max);
+                            /*cout << "\nObtained Marks: ";
+                            cin >> marks;*/
+                            obj.setRawscore(marks);
+                            obj.setsectionid(studentinfo[i]->getSection());
+                            obj.setStudentID(studentinfo[i]->getID());
+                            //obj.setWeight(); we dont need this
+                            studentinfo[i]->getElective(j).setAssignment(&obj);
+
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            for (int i = 0;i < studentinfo.size();i++) {
+                if (studentinfo[i]->getNumLab() != 0) {
+                    for (int j = 0; j < studentinfo[i]->getNumLab(); j++) {
+                        if (studentinfo[i]->getLab(j).getID() == c_id && studentinfo[i]->getSection() == sec) {
+                            Assignment obj;
+                            cout << "\nStudent ID: " << studentinfo[i]->getID();
+                            obj.setTMarks(Tmarks);
+                            obj.setCourseID(c_id);
+                            obj.setMax(max);
+                            obj.setMin(min);
+                            marks = getValid("\nObtained Marks: ", min, max);
+                            /*cout << "\nObtained Marks: ";
+                            cin >> marks;*/
+                            obj.setRawscore(marks);
+                            obj.setsectionid(studentinfo[i]->getSection());
+                            obj.setStudentID(studentinfo[i]->getID());
+                            //obj.setWeight(); we dont need this
+                            studentinfo[i]->getLab(j).setAssignment(&obj);
+
+                        }
+                    }
+                }
+            }
+            break;
+        }
+
+
+    }
+}
+
+void T_viewSchedule(Teacher&obj) {
+    for (int i = 0;i < sectioninfo.size();i++) {
+        if (obj.getID() == sectioninfo[i].getCourseTeacherID()) {
+            cout << "\nCourse Code: " << sectioninfo[i].getCourseID() << "\tVenue: " << sectioninfo[i].getVenue().getID() << "\tTimings: " << sectioninfo[i].getTimings();
+        }
+    }
+}
 void TeacherProfile(Teacher& obj) {
     int choice;
     while (true) {
-        cout << "\nPlease choose your action: 1. View Profile\n2. View Schedule\n3. View Classes\n4. Set Marks\n5. View Feedback Results\n6. View Class Average\n7. Close System\nYour choice: ";
-        cin >> choice;
-        /*switch (choice) {
+       cout << endl;
+        cout << "888b     d888          d8b               888b     d888" << endl;
+        cout << "8888b   d8888          Y8P               8888b   d8888" << endl;
+        cout << "88888b.d88888                            88888b.d88888" << endl;
+        cout << "888Y88888P888  8888b.  888 88888b.       888Y88888P888  .d88b.  88888b.  888  888" << endl;
+        cout << "888 Y888P 888     \"88b 888 888 \"88b      888 Y888P 888 d8P  Y8b 888 \"88b 888  888" << endl;
+        cout << "888  Y8P  888 .d888888 888 888  888      888  Y8P  888 88888888 888  888 888  888" << endl;
+        cout << "888   \"   888 888  888 888 888  888      888   \"   888 Y8b.     888  888 Y88b 888" << endl;
+        cout << "888       888 \"Y888888 888 888  888      888       888  \"Y8888  888  888  \"Y88888" << endl;
+        choice=getValid("\nPlease choose your action: \n1. View Profile\n2. View Schedule\n3. View Classes\n4. Set Marks\n5. View Feedback Results\n6. View Class Average\n7. Close System\nYour choice: ", 1, 7);
+        switch (choice) {
         case 1:
-            T_viewProfile();
+            cout << "\nTEACHER PROFILE";
+            obj.displayProfile();
+            break;
         case 2:
-            T_viewSchedule();
+            T_viewSchedule(obj);
+            break;
         case 3:
-            T_viewClasses();
+            T_viewClasses(obj);
+            break;
         case 4:
-            T_setMarks();
+            T_setMarks(obj);
+            break;
         case 5:
-            T_viewFeedback();
+            T_viewFeedback(obj);
+            break;
         case 6:
-            T_viewAverage();
-        case 7:
+            closing();
             cout << "\nGoodbye! :)";
             return;
-        }*/
+        }
     }
 }
 
@@ -379,7 +563,12 @@ int main(){
     readSectionsdata();
     readWeightagesdata();
     readAssessmentsdata();
+    readExamSchedule();
+    readResultsdata();
     Linking();
+    if (finalschedule.size() != 0) {
+        Scheduler();
+    }
 
     string ID;
     int index;
