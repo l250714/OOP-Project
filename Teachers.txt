@@ -1,0 +1,8 @@
+T2001 | Dr. Salman Akhtar | Professor | Computer Science | T2001@nu.edu.pk 
+T2002 | Prof. Nadia Hussain | Associate Professor | Software Engineering | T2002@nu.edu.pk 
+T2003 | Engr. Bilal Saeed | Lecturer | Information Technology | T2003@nu.edu.pk 
+T2004 | Dr. Hira Yousaf | Assistant Professor | Artificial Intelligence | T2004@nu.edu.pk 
+T2005 | Prof. Kamran Ali | Lab Instructor | Computer Science | T2005@nu.edu.pk 
+T2006 | Ms. Sana Farooq | Lecturer | Management Sciences | T2006@nu.edu.pk 
+T2007 | Dr. Imran Qureshi | Professor | Cyber Security | T2007@nu.edu.pk 
+T2008 | Ms. Rabia Khalid | Assistant Professor | Data Science | T2008@nu.edu.pk 
