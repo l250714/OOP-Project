@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <iomanip>
 #include "Assessments.h"
 #include "Management.h"
 #include "Courses.h"
@@ -104,59 +106,263 @@ string   section_course::getTimings() const {
 
 section_course::~section_course() {}
 
-vector <booking> examschedule;
-void ConflictSolver() {
-    for (int i = 0;i < examschedule.size()-1;i++) {
-        if (examschedule[i].date == examschedule[i + 1].date) {
-            examschedule[i + 1].date += 1;
+void CoreFeedback(Student* ptr) {
+    ofstream feedback("C:\\Users\\hp\\source\\repos\\Projectver2\\Projectver2\\StudentFeedback.txt",ios::app);
+    int numq = 0;
+    float score;
+    int Tscore = 0;
+    for (int i = 0;i < ptr->getNumCore();i++) {
+        cout << "Course: " << ptr->getCore(i).getName();
+        cout << "\nHow would you rate the teaching style on a scale of 0-5?";   //doing 2 questions for now
+        while (true) {
+            cin >> score;
+            if (score > 0 && score < 6) {
+                numq++;
+                Tscore += score;
+                break;
+            }
+            else {
+                cout << "\nError: Out of range 0-5. Try Again: ";
+            }
+        }
+        cout << "\nHow well did you understand the course contents on a scale of 0-5?";
+        while (true) {
+            cin >> score;
+            if (score > 0 && score < 6) {
+                numq++;
+                Tscore += score;
+                break;
+            }
+            else {
+                cout << "\nError: Out of range 0-5. Try Again: ";
+            }
+
+        }
+        string line = "";
+        line += (ptr->getCore(i).get_teacherid() + "|" + to_string(Tscore / numq));
+        feedback << line<<endl;
+    }
+
+    feedback.close();
+}
+void ElectiveFeedback(Student* ptr) {
+    ofstream feedback("C:\\Users\\hp\\source\\repos\\Projectver2\\Projectver2\\StudentFeedback.txt", ios::app);
+    int numq = 0;
+    float score;
+    int Tscore = 0;
+    for (int i = 0;i < ptr->getNumElective();i++) {
+        cout << "Course: " << ptr->getElective(i).getName();
+        cout << "\nHow would you rate the teaching style on a scale of 0-5?";   //doing 2 questions for now
+        while (true) {
+            cin >> score;
+            if (score > 0 && score < 6) {
+                numq++;
+                Tscore += score;
+                break;
+            }
+            else {
+                cout << "\nError: Out of range 0-5. Try Again: ";
+            }
+        }
+        cout << "\nHow well did you understand the course contents on a scale of 0-5?";
+        while (true) {
+            cin >> score;
+            if (score > 0 && score < 6) {
+                numq++;
+                Tscore += score;
+                break;
+            }
+            else {
+                cout << "\nError: Out of range 0-5. Try Again: ";
+            }
+
+        }
+        string line = "";
+        line += (ptr->getElective(i).get_teacherid() + "|" + to_string(Tscore / numq));
+        feedback << line<<endl;
+    }
+
+    feedback.close();
+}
+void LabFeedback(Student* ptr) {
+    ofstream feedback("C:\\Users\\hp\\source\\repos\\Projectver2\\Projectver2\\StudentFeedback.txt", ios::app);
+    int numq = 0;
+    float score;
+    int Tscore = 0;
+    for (int i = 0;i < ptr->getNumLab();i++) {
+        cout << "Course: " << ptr->getLab(i).getName();
+        cout << "\nHow would you rate the teaching style on a scale of 0-5?";   //doing 2 questions for now
+        while (true) {
+            cin >> score;
+            if (score > 0 && score < 6) {
+                numq++;
+                Tscore += score;
+                break;
+            }
+            else {
+                cout << "\nError: Out of range 0-5. Try Again: ";
+            }
+        }
+        cout << "\nHow well did you understand the course contents on a scale of 0-5?";
+        while (true) {
+            cin >> score;
+            if (score > 0 && score < 6) {
+                numq++;
+                Tscore += score;
+                break;
+            }
+            else {
+                cout << "\nError: Out of range 0-5. Try Again: ";
+            }
+
+        }
+        string line = "";
+        line += (ptr->getLab(i).get_teacherid() + "|" + to_string(Tscore / numq));
+        feedback << line<<endl;
+    }
+
+    feedback.close();
+}
+
+
+//Feedback system
+void TeacherFeedbacks(Student* ptr) {
+    CoreFeedback(ptr);
+    ElectiveFeedback(ptr);
+    LabFeedback(ptr);
+}
+
+
+void availableCourses(int sem) {
+    cout << "\n========================================================\n";
+    cout << left
+        << setw(15) << "Course ID"
+        << setw(30) << "Course Name"
+        << setw(15) << "Type" << endl;
+    cout << "========================================================\n";
+    for (int i = 0;i < courseinfo.size();i++) {
+        if (courseinfo[i]->getSemester() == sem) {
+            cout << "\nCode: " << courseinfo[i]->getID() << endl << "Name: " << courseinfo[i]->getName() << endl << "Type: " << courseinfo[i]->getType();
         }
     }
 }
+int RegisteredStudents(string courseID) {
 
-void Scheduler(string section) {
-    //management can set the number of hours for each exam: in Database Manager
-    //count number of students in a single section:
     int count = 0;
-    for (int i = 0;i < sectioninfo.size();i++) {
-        if (section == sectioninfo[i].getSectionID()) {
+
+    for (int i = 0; i < studentinfo.size(); i++) {
+
+        for (int j = 0; j < studentinfo[i]->getNumCore(); j++) {
+            if (studentinfo[i]->getCore(j).getID() == courseID)
+                count++;
+        }
+
+        for (int j = 0; j < studentinfo[i]->getNumElective(); j++) {
+            if (studentinfo[i]->getElective(j).getID() == courseID)
+                count++;
+        }
+
+        for (int j = 0; j < studentinfo[i]->getNumLab(); j++) {
+            if (studentinfo[i]->getLab(j).getID() == courseID)
+                count++;
+        }
+    }
+
+    return count;
+}
+void SmartResgitartion(Student* ptr, string id) {
+    //find the course the student wants to register for
+    for (int i = 0;i < courseinfo.size();i++) {
+        if (courseinfo[i]->getID() == id) {
+            //checking if student is already registered for this course
+            for (int j = 0;j < courseinfo[i]->getStudent().size();j++) {
+                if (courseinfo[i]->getStudent()[j]->getID() == ptr->getID()) {
+                    cout << "\nAlready registered for this course.";
+                    return;
+                }
+            }
+            //check if capacity is available
+            for (int j = 0;j < sectioninfo.size();j++) {
+                if (sectioninfo[j].getCourseID() == id) {
+                    int count = RegisteredStudents(id);
+                    if (sectioninfo[j].getVenue().getCapacity() == count) {
+                        cout << "\nCourse is full :(";
+                        return;
+                    }
+                }
+            }
+            //registering for this course
+            if (courseinfo[i]->getType() == "Core") {
+                ptr->setCore(dynamic_cast<Core*>(courseinfo[i]));
+            }
+            else if (courseinfo[i]->getType() == "Elective") {
+                ptr->setElective(dynamic_cast<Elective*>(courseinfo[i]));
+            }
+            else {
+                ptr->setLab(dynamic_cast<Lab*>(courseinfo[i]));
+            }
+            courseinfo[i]->setStudent(*ptr);
+        }
+    }
+    cout << "\nRegistration successful!";
+}
+
+
+//Exam schedule Manager
+vector<ExamSlot> finalschedule;
+
+int CountStudentsInSection(string section) {
+
+    int count = 0;
+
+    for (int i = 0; i < studentinfo.size(); i++) {
+
+        if (studentinfo[i]->getSection() == section) {
+
             count++;
         }
     }
-    //find total number of courses for each section (assuming all students are registered for the same courses)
-    int tcourses = 0;
-    for (int i = 0;i < studentinfo.size();i++) {
-        if (studentinfo[i]->getSection() == section) {
-            tcourses = (studentinfo[i]->getNumCore()) + (studentinfo[i]->getNumElective()) + (studentinfo[i]->getNumLab());
-        }
-    }
-    for (int i = 0;i < venueinfo.size();i++) {  //initializing examschedule
-        booking temp;
-        temp.v = &venueinfo[i];
-        temp.status = false;
-        temp.date = 0;
-        examschedule.push_back(temp);
-    }
-    //assuming exams start on 20th May
-    for (int i = 0;i < venueinfo.size();i++) {
-        if (examschedule[i].date==0) {
-            //check if venues are booked
-            for (int j = 0;j < examschedule.size();j++) {
-                if (!(examschedule[j].status) && examschedule[j].v->getID() == venueinfo[i].getID() && examschedule[j].v->getCapacity() <= count) {
-                    booking temp;
-                    temp.v = &venueinfo[i];
-                    temp.status = true;
-                    temp.date = 20;
-                    examschedule.push_back(temp);
-                    ConflictSolver();
-                }
+
+    return count;
+}
+void Scheduler() {
+    string time[3] = { "9AM-12PM", "1:30PM-4:30PM","4:30-6:30" };
+    int index = 0; int usage=0, vcounter=0;
+    int date = 1;  //1st May
+    ExamSlot temp;
+    for (int i = 0;i < sectioninfo.size();i++) {
+        if (CountStudentsInSection(sectioninfo[i].getSectionID()) <= venueinfo[vcounter].getCapacity()) {
+            temp.courseID = sectioninfo[i].getCourseID();
+            temp.date = date;
+            temp.sectionID = sectioninfo[i].getSectionID();
+            temp.time = time[index];
+            index++;
+            usage++;
+            temp.venueID = sectioninfo[i].getVenue().getID();
+            finalschedule.push_back(temp);
+            if (usage > 3) {
+                vcounter++;
+                usage = 0;
+            }
+            if (index > 2) {
+                index = 0;
+                date++;
             }
         }
         else {
-            booking temp;
-            temp.v = &venueinfo[i];
-            temp.status = true;
-            temp.date = 20;
-            examschedule.push_back(temp);
+            vcounter++; //move on to a different venue
         }
     }
+    SaveExamSchedule();
+
+}
+void SaveExamSchedule() {
+
+    ofstream file("C:\\Users\\hp\\source\\repos\\Projectver2\\Projectver2\\ExamSchedule.txt",ios::app);
+
+    for (int i = 0; i < finalschedule.size(); i++) {
+        file<< finalschedule[i].sectionID << " | "<< finalschedule[i].courseID << " | "<< finalschedule[i].venueID << " | "<< finalschedule[i].date << " | "<< finalschedule[i].time << endl;
+    }
+
+    file.close();
 }
