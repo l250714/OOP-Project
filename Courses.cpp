@@ -30,62 +30,12 @@ Course::Course() {
     exam_duration = 0;        //has to be decided
 }
 void Course::set_ID(string id) {
-    //course ID must be alphanumeric and not longer than 7
-    int idlen = id.length();
-    /*if (idlen > 7) {
-        cout << "\nError: Course Code is Invalid. Please Try Again.";
-        return;
-    }
-    for (int i = 0;id[i] != '\0';i++) {
-        if (iswalnum(id[i])) {
-            continue;
-        }
-        else {
-            cout << "\nError: Course Code must only contain alphanumeric characters.";
-            return;
-        }
-    }*/
     ID = id;
 }
 void Course::set_teacherID(string id) {
-    //course ID must be alphanumeric and not longer than 7
-    int idlen = id.length();
-    /*if (idlen > 4) {
-        cout << "\nError: Course Code is Invalid. Please Try Again.";
-        return;
-    }
-    for (int i = 0;id[i] != '\0';i++) {
-        if (iswalnum(id[i])) {
-            continue;
-        }
-        else {
-            cout << "\nError: Teacher ID must only contain alphanumeric characters.";
-            return;
-        }
-    }*/
-    //teacherID = new char[idlen + 1];
     teacherID = id;
 }
 void Course::setname(string name) {
-    int namelen = name.length();
-    /*if (!isalpha(name[0])) {
-        cout << "\nName of the course must begin with an alphabet or a number.";
-        return;
-    }
-    else {
-        this->name = new char[namelen + 1];
-        for (int i = 0;i < namelen;i++) {
-            if (iswalnum(name[i])) {
-                this->name[i] = name[i];
-            }
-            else {
-                cout << "\nError: Course Name must only contain alphanumeric characters.";
-                return;
-            }
-
-        }
-        this->name[namelen] = '\0';
-    }*/
     this->name = name;
 }
 void Course::setExamduration(float time) {
@@ -131,12 +81,12 @@ void Course::setStudent(Student& obj) {
     }
     students.push_back(s);
 }
+vector <Student*>& Course::getStudent() {
+    return students;
+}
 Student& Course::getStudent(int i) {
     return *students[i];
 }
-//vector <Student*> Course::getallStudents() {
-//    return students;
-//}
 string Course::getID() {
     return ID;
 }
@@ -176,6 +126,20 @@ void Core::setgrade(string grade) {
     else {
         this->grade = grade;
     }
+}
+void Core::setQuiz(Quiz* obj) {
+    quizzes.push_back(*obj);
+    TQuizzes++;
+}
+
+void Core::setExam(Exam* obj) {
+    exams.push_back(*obj);
+    TExams++;
+}
+
+void Core::setAssignment(Assignment* obj) {
+    assignments.push_back(*obj);
+    TAssignments++;
 }
 float Core::getpoints() {
     return points;
@@ -227,6 +191,15 @@ void Elective::setgrade(string grade) {
         this->grade = grade;
     }
 }
+void Elective::setQuiz(Quiz* obj) {
+    quizzes.push_back(*obj);
+    TQuizzes++;
+}
+
+void Elective::setAssignment(Assignment* obj) {
+    assignments.push_back(*obj);
+    TAssignments++;
+}
 float Elective::getpoints() {
     return points;
 }
@@ -243,9 +216,6 @@ int Elective::getCredits() {
 }
 int Elective::getTQuizzes() {
     return TQuizzes;
-}
-int Elective::getTExams() {
-    return TExams;
 }
 int Elective::getTAssignments() {
     return TAssignments;
@@ -274,6 +244,14 @@ void Lab::setgrade(string grade) {
         this->grade = grade;
     }
 }
+void Lab::setQuiz(Quiz* obj) {
+    quizzes.push_back(*obj);
+    TQuizzes++;
+}
+void Lab::setAssignment(Assignment* obj) {
+    Lab_tasks.push_back(*obj);
+    TAssignments++;
+}
 float Lab::getpoints() {
     return points;
 }
@@ -290,9 +268,6 @@ int Lab::getCredits() {
 }
 int Lab::getTQuizzes() {
     return TQuizzes;
-}
-int Lab::getTExams() {
-    return TExams;
 }
 int Lab::getTAssignments() {
     return TAssignments;
