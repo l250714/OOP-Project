@@ -24,12 +24,24 @@ struct W{
 };
 extern W weightstore[3];   //0: core; 1: elective; 2: lab
 
+struct ExamSlot {
+    string sectionID;
+    string courseID;
+    string venueID;
+    int date;
+    string time;
+};
+extern vector<ExamSlot> finalschedule;  //will store the whole exam schedule
+
+void readExamSchedule();
 
 void readStudentdata();
 
 void readSectionsdata();
 
 float readTeacherFeedback(string t_id);
+
+void readResultsdata();
 
 void readTeachersdata();
 
@@ -43,4 +55,5 @@ void readCoursesdata();
 
 void Linking();
 
+void closing();
 #endif
