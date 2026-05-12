@@ -18,8 +18,7 @@ Academic Office Replacement
 2. mark each student
 3. view each of their classes/ sections
 4. view feedback results
-5. view class average
-6. venus and schedules
+5. venus and schedules
 
 ## Data Required (for students)
 1. ID
@@ -50,7 +49,7 @@ Academic Office Replacement
 4. Teacher ID/ Name
 5. Course Type
 6. exam duration
-7. average grade/ marks
+7. marks
    
 ## Data Required (for Management)
 1. Exam schedule
