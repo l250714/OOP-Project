@@ -1,28 +1,28 @@
-BCS-2A | S1001 | C102 | Exam | 41 | 50 | 18
-BCS-2A | S1002 | C102 | Exam | 47 | 50 | 18
-BCS-1B | S1003 | C101 | Quiz | 16 | 20 | 5
-BCS-3C | S1004 | C104 | Assignment | 27 | 30 | 10
-BSE-4A | S1005 | C105 | Assignment | 23 | 30 | 10
-BSE-5B | S1006 | C106 | Exam | 45 | 50 | 20
-BBA-6A | S1007 | C107 | Quiz | 14 | 20 | 6
-BCS-7D | S1008 | C108 | Assignment | 26 | 30 | 12
-BSE-8C | S1009 | C104 | Exam | 33 | 50 | 18
-BBA-1A | S1010 | C101 | Quiz | 18 | 20 | 5
-BCS-2E | S1011 | C103 | Assignment | 25 | 30 | 10
-BSE-3A | S1012 | C103 | Exam | 37 | 50 | 15
-BCS-4B | S1013 | C102 | Quiz | 19 | 20 | 7
-BBA-5C | S1014 | C107 | Assignment | 24 | 30 | 10
-BCS-6A | S1015 | C106 | Exam | 39 | 50 | 18
-BSE-7B | S1016 | C109 | Quiz | 17 | 20 | 6
-BBA-8A | S1017 | C110 | Assignment | 29 | 30 | 10
-BCS-1C | S1018 | C101 | Exam | 35 | 50 | 15
-BSE-2D | S1019 | C102 | Quiz | 18 | 20 | 7
-BBA-3B | S1020 | C110 | Assignment | 22 | 30 | 10
-BCS-2A | S1001 | C102 | Quiz | 15 | 20 | 5
-BCS-2A | S1002 | C102 | Assignment | 28 | 30 | 10
-BCS-1B | S1003 | C101 | Exam | 31 | 50 | 15
-BCS-3C | S1004 | C104 | Quiz | 17 | 20 | 6
-BSE-4A | S1005 | C105 | Exam | 34 | 50 | 18
-BSE-5B | S1006 | C106 | Assignment | 27 | 30 | 10
-BBA-6A | S1007 | C107 | Exam | 38 | 50 | 15
-BCS-7D | S1008 | C108 | Quiz | 16 | 20 | 6
+BCS-2A | S1001 | C102 | Exam | 41 | 50 | 18 |50
+BCS-2A | S1002 | C102 | Exam | 47 | 50 | 18| 50
+BCS-1B | S1003 | C101 | Quiz | 16 | 20 | 5 | 20
+BCS-3C | S1004 | C104 | Assignment | 27 | 30 | 10 | 30
+BSE-4A | S1005 | C105 | Assignment | 23 | 30 | 10| 30
+BSE-5B | S1006 | C106 | Exam | 45 | 50 | 20| 50
+BBA-6A | S1007 | C107 | Quiz | 14 | 20 | 6| 20
+BCS-7D | S1008 | C108 | Assignment | 26 | 30 | 12| 30
+BSE-8C | S1009 | C104 | Exam | 33 | 50 | 18| 50
+BBA-1A | S1010 | C101 | Quiz | 18 | 20 | 5| 20
+BCS-2E | S1011 | C103 | Assignment | 25 | 30 | 10| 30
+BSE-3A | S1012 | C103 | Exam | 37 | 50 | 15| 50
+BCS-4B | S1013 | C102 | Quiz | 19 | 20 | 7| 20
+BBA-5C | S1014 | C107 | Assignment | 24 | 30 | 10| 30
+BCS-6A | S1015 | C106 | Exam | 39 | 50 | 18| 50
+BSE-7B | S1016 | C109 | Quiz | 17 | 20 | 6| 20
+BBA-8A | S1017 | C110 | Assignment | 29 | 30 | 10| 30
+BCS-1C | S1018 | C101 | Exam | 35 | 50 | 15| 50
+BSE-2D | S1019 | C102 | Quiz | 18 | 20 | 7| 20
+BBA-3B | S1020 | C110 | Assignment | 22 | 30 | 10| 30
+BCS-2A | S1001 | C102 | Quiz | 15 | 20 | 5| 20
+BCS-2A | S1002 | C102 | Assignment | 28 | 30 | 10| 30
+BCS-1B | S1003 | C101 | Exam | 31 | 50 | 15| 50
+BCS-3C | S1004 | C104 | Quiz | 17 | 20 | 6| 20
+BSE-4A | S1005 | C105 | Exam | 34 | 50 | 18| 50
+BSE-5B | S1006 | C106 | Assignment | 27 | 30 | 10| 30
+BBA-6A | S1007 | C107 | Exam | 38 | 50 | 15| 50
+BCS-7D | S1008 | C108 | Quiz | 16 | 20 | 6| 20
