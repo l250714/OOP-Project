@@ -57,17 +57,26 @@ public:
     ~section_course();
 };
 
-struct booking {
-    Venue* v;
-    bool status;
-    int date;
-};
-extern vector <booking> examschedule;
 
-void Scheduler(string section);
-void ConflictSolver();
-void TeacherFeedbacks();
-void SmartRegistration();
+//Feedback system
+
+void CoreFeedback(Student* ptr);
+void ElectiveFeedback(Student* ptr);
+void LabFeedback(Student* ptr);
+void TeacherFeedbacks(Student* ptr);
+
+
+
+//Registration
+void availableCourses(int sem);
+int RegisteredStudents(string courseID);
+void SmartResgitartion(Student* ptr, string id);
+
+//exams schedule
+
+int CountStudentsInSection(string section);
+void Scheduler();
+void SaveExamSchedule();
 
 
 #endif
