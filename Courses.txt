@@ -1,0 +1,10 @@
+C101 | Programming Fundamentals | T2001 | Core| 1
+C102 | Data Structures | T2002 | Core| 2
+C103 | Database Systems | T2003 | Core| 3
+C104 | Artificial Intelligence | T2004 | Elective| 4
+C105 | Software Engineering Lab | T2005 | Lab| 5
+C106 | Computer Networks | T2007 | Core| 6
+C107 | Web Development | T2003 | Elective| 7
+C108 | Operating Systems Lab | T2005 | Lab| 8
+C109 | Cyber Security | T2007 | Core| 6
+C110 | Data Analytics | T2008 | Elective| 5
